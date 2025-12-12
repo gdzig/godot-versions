@@ -1,0 +1,1596 @@
+.{
+    .name = .godot,
+    .version = "0.0.0",
+    .fingerprint = 0x74a61aa4da2dab35,
+    .paths = .{
+        "build.zig",
+        "build.zig.zon",
+    },
+    .dependencies = .{
+        .godot_1_0_0_linux_x86_64 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/1.0-stable/Godot_v1.0_stable_x11.64.zip",
+            .hash = "N-V-__8AAAgFYwEl6-Z1CxZr3PHLAx5iljCzMGrsdGaFrKIH",
+            .lazy = true,
+        },
+        .godot_1_0_0_linux_x86 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/1.0-stable/Godot_v1.0_stable_x11.32.zip",
+            .hash = "N-V-__8AABSAcgEm9S6oBN1QZau-dKGkuy5tw-Qk226uGglB",
+            .lazy = true,
+        },
+        .godot_1_0_0_windows_x86_64 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/1.0-stable/Godot_v1.0_stable_win64.exe.zip",
+            .hash = "N-V-__8AAAjCbgGVHmx8Y8NsVyJ8TxZPgyNjA_7G5XaFY3dq",
+            .lazy = true,
+        },
+        .godot_1_0_0_windows_x86 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/1.0-stable/Godot_v1.0_stable_win32.exe.zip",
+            .hash = "N-V-__8AABiSlAFVzDpZl_XRbPZpgDVF2ER_Vdbjb43nKyve",
+            .lazy = true,
+        },
+        .godot_1_1_0_linux_x86_64 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/1.1-stable/Godot_v1.1_stable_x11.64.zip",
+            .hash = "N-V-__8AAK-fiQHgq_Z08FTXM-xjtFFxXcGpTlJOUKnFkd2m",
+            .lazy = true,
+        },
+        .godot_1_1_0_linux_x86 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/1.1-stable/Godot_v1.1_stable_x11.32.zip",
+            .hash = "N-V-__8AAKtGgQEeRBVDhvykbrpFsyEnGUtG7YuVLDp5aW1-",
+            .lazy = true,
+        },
+        .godot_1_1_0_windows_x86_64 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/1.1-stable/Godot_v1.1_stable_win64.exe.zip",
+            .hash = "N-V-__8AAAB6zwG-PVH6lQO5x851pHf6eWriAsBV4SHEh9S9",
+            .lazy = true,
+        },
+        .godot_1_1_0_windows_x86 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/1.1-stable/Godot_v1.1_stable_win32.exe.zip",
+            .hash = "N-V-__8AAACyiAH73zRN0lEd6Y6XLpUvx9FcGujNxLMeZ4rA",
+            .lazy = true,
+        },
+        .godot_2_0_0_linux_x86_64 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/2.0-stable/Godot_v2.0_stable_x11.64.zip",
+            .hash = "N-V-__8AAAhB-AGde8K3iXn-HY2DRb7PmhUGLVi-Crl1YdfB",
+            .lazy = true,
+        },
+        .godot_2_0_0_windows_x86_64 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/2.0-stable/Godot_v2.0_stable_win64.exe.zip",
+            .hash = "N-V-__8AAF8OdAEt6tjfkVWVY0yruju7H1S5Z6x5HeqkD4on",
+            .lazy = true,
+        },
+        .godot_2_0_0_windows_x86 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/2.0-stable/Godot_v2.0_stable_win32.exe.zip",
+            .hash = "N-V-__8AAGUhDQFyGGSdwBan7mYxRmtHdCvtN70ntoJITVLx",
+            .lazy = true,
+        },
+        .godot_2_0_1_linux_x86_64 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/2.0.1-stable/Godot_v2.0.1_stable_x11.64.zip",
+            .hash = "N-V-__8AALRfrwCevc7iizrYr_6sOZ_AuBHR7wWHAmVXDU5W",
+            .lazy = true,
+        },
+        .godot_2_0_1_linux_x86 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/2.0.1-stable/Godot_v2.0.1_stable_x11.32.zip",
+            .hash = "N-V-__8AACx0qwAQJvzkM8kuz3VESijw4gwl-Z-aTVJvtSKm",
+            .lazy = true,
+        },
+        .godot_2_0_1_windows_x86_64 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/2.0.1-stable/Godot_v2.0.1_stable_win64.exe.zip",
+            .hash = "N-V-__8AAF_sfgF8c-B0EVOhjF00RlN6-GRHlsI6rX9vZNFI",
+            .lazy = true,
+        },
+        .godot_2_0_1_windows_x86 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/2.0.1-stable/Godot_v2.0.1_stable_win32.exe.zip",
+            .hash = "N-V-__8AADTrCAFIgHEQULhPRz1s_pxeobV333t7w6GrWQBK",
+            .lazy = true,
+        },
+        .godot_2_0_2_linux_x86_64 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/2.0.2-stable/Godot_v2.0.2_stable_x11.64.zip",
+            .hash = "N-V-__8AAIRYxQFEZVS4FGYAad0hcaVAkP4bdNyqpt1nLEYT",
+            .lazy = true,
+        },
+        .godot_2_0_2_linux_x86 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/2.0.2-stable/Godot_v2.0.2_stable_x11.32.zip",
+            .hash = "N-V-__8AAJknvAGDE9V0YhmE9wODtSfroEzwcZoN9A0HRIN6",
+            .lazy = true,
+        },
+        .godot_2_0_2_windows_x86_64 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/2.0.2-stable/Godot_v2.0.2_stable_win64.exe.zip",
+            .hash = "N-V-__8AAMVtyQJIxHj5V0YKfOX3MyUDvsT9U8jIljwukzlP",
+            .lazy = true,
+        },
+        .godot_2_0_2_windows_x86 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/2.0.2-stable/Godot_v2.0.2_stable_win32.exe.zip",
+            .hash = "N-V-__8AAHIhPwISULlY41SXFdLDiennUElg_Dgi7nzvDrYz",
+            .lazy = true,
+        },
+        .godot_2_0_3_linux_x86_64 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/2.0.3-stable/Godot_v2.0.3_stable_x11.64.zip",
+            .hash = "N-V-__8AAEFBxgGwpXVIxiYHKl0PBUD0YqRMoQxPy7HD50bS",
+            .lazy = true,
+        },
+        .godot_2_0_3_linux_x86 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/2.0.3-stable/Godot_v2.0.3_stable_x11.32.zip",
+            .hash = "N-V-__8AAFcbvQHGNVl6oTnp9AMePk-vByb5Ldgz8WFk44JU",
+            .lazy = true,
+        },
+        .godot_2_0_3_windows_x86_64 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/2.0.3-stable/Godot_v2.0.3_stable_win64.exe.zip",
+            .hash = "N-V-__8AAABaMgGfBgONLzX_nuGl-v8Yr6FVEd8xqf9ZfVIX",
+            .lazy = true,
+        },
+        .godot_2_0_3_windows_x86 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/2.0.3-stable/Godot_v2.0.3_stable_win32.exe.zip",
+            .hash = "N-V-__8AAADa_AAZ0iciKqc-N5EsaZt0wjw0xzxrJAEwB_il",
+            .lazy = true,
+        },
+        .godot_2_0_4_1_linux_x86_64 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/2.0.4.1-stable/Godot_v2.0.4.1_stable_x11.64.zip",
+            .hash = "N-V-__8AAKFr5QEtVexff50sOppyksUmx-BI2uIsKLZFMH2h",
+            .lazy = true,
+        },
+        .godot_2_0_4_1_linux_x86 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/2.0.4.1-stable/Godot_v2.0.4.1_stable_x11.32.zip",
+            .hash = "N-V-__8AADTv2gEQQxwa8_yB4pf3qwTDtb_CBp6OxiNsK9Ks",
+            .lazy = true,
+        },
+        .godot_2_0_4_1_windows_x86_64 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/2.0.4.1-stable/Godot_v2.0.4.1_stable_win64.exe.zip",
+            .hash = "N-V-__8AAAAmRwEQWR7ynHrzZU19RholzyMLFkV0kUUOp_LC",
+            .lazy = true,
+        },
+        .godot_2_0_4_1_windows_x86 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/2.0.4.1-stable/Godot_v2.0.4.1_stable_win32.exe.zip",
+            .hash = "N-V-__8AAAB4DQFYoO1O8Z-vbzLxGYjuPlAAdzbWGMoDDzhi",
+            .lazy = true,
+        },
+        .godot_2_1_0_linux_x86_64 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/2.1-stable/Godot_v2.1-stable_x11.64.zip",
+            .hash = "N-V-__8AAIRxYQJ5F9lhR-YF-NZ_8IjAvFZPx-YhtjdXeu4f",
+            .lazy = true,
+        },
+        .godot_2_1_0_linux_x86 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/2.1-stable/Godot_v2.1-stable_x11.32.zip",
+            .hash = "N-V-__8AAAiLVgLqzeSAARqMUtfcPc_iwBDlsm6Ya6MykBwL",
+            .lazy = true,
+        },
+        .godot_2_1_0_windows_x86_64 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/2.1-stable/Godot_v2.1-stable_win64.exe.zip",
+            .hash = "N-V-__8AAADwtAELvtfWPT5bx4qqPMrS9i8URmN1e5hb5_k0",
+            .lazy = true,
+        },
+        .godot_2_1_0_windows_x86 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/2.1-stable/Godot_v2.1-stable_win32.exe.zip",
+            .hash = "N-V-__8AAAAedwGtT2VcB2uI5JxiJ6JNv109IdfCcfzLCy89",
+            .lazy = true,
+        },
+        .godot_2_1_1_linux_x86_64 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/2.1.1-stable/Godot_v2.1.1-stable_x11.64.zip",
+            .hash = "N-V-__8AAEdiZQJUC0I8bElT6N4KpE6FpycCZQhTPM6wUNVB",
+            .lazy = true,
+        },
+        .godot_2_1_1_linux_x86 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/2.1.1-stable/Godot_v2.1.1-stable_x11.32.zip",
+            .hash = "N-V-__8AAIiGWgLB8BhyIWUCmdAVn7oJCO7iOYG6vnDWGniK",
+            .lazy = true,
+        },
+        .godot_2_1_1_windows_x86_64 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/2.1.1-stable/Godot_v2.1.1-stable_win64.exe.zip",
+            .hash = "N-V-__8AAACutgH6I27mILPdoR6d7AaLk-OBPg4trbBSHjqH",
+            .lazy = true,
+        },
+        .godot_2_1_1_windows_x86 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/2.1.1-stable/Godot_v2.1.1-stable_win32.exe.zip",
+            .hash = "N-V-__8AAACqeAHlZu0yw8Psg2xkzRmyEfxlnAae4C0VatE3",
+            .lazy = true,
+        },
+        .godot_2_1_2_linux_x86_64 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/2.1.2-stable/Godot_v2.1.2-stable_x11.64.zip",
+            .hash = "N-V-__8AAHyjcQJrYDXFVxrPcE-OfzJhfKjIR8DZP963SlWp",
+            .lazy = true,
+        },
+        .godot_2_1_2_linux_x86 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/2.1.2-stable/Godot_v2.1.2-stable_x11.32.zip",
+            .hash = "N-V-__8AAIMxZgLvNQMJJ90S-twJHeYeM49eldmcVFv57kyK",
+            .lazy = true,
+        },
+        .godot_2_1_2_windows_x86_64 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/2.1.2-stable/Godot_v2.1.2-stable_win64.exe.zip",
+            .hash = "N-V-__8AAABKuQH0zaseczrG6fim_0_HTzpC3eAEEb_rTzED",
+            .lazy = true,
+        },
+        .godot_2_1_2_windows_x86 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/2.1.2-stable/Godot_v2.1.2-stable_win32.exe.zip",
+            .hash = "N-V-__8AAAAGewGRdS9CJe66PN1kFv1fwsyK-ACLt6RuEHA2",
+            .lazy = true,
+        },
+        .godot_2_1_3_linux_x86_64 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/2.1.3-stable/Godot_v2.1.3-stable_x11.64.zip",
+            .hash = "N-V-__8AACoqeAIljF5Y231k4G0Dex0DwLWVD7uSZ_q36usP",
+            .lazy = true,
+        },
+        .godot_2_1_3_linux_x86 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/2.1.3-stable/Godot_v2.1.3-stable_x11.32.zip",
+            .hash = "N-V-__8AAGmkbAK3iQoTsti7ghKz3zgLDDAy7V8oQ4Bc8TlI",
+            .lazy = true,
+        },
+        .godot_2_1_3_windows_x86_64 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/2.1.3-stable/Godot_v2.1.3-stable_win64.exe.zip",
+            .hash = "N-V-__8AAADovgGW-ikvp5y2uXUNak52lxAbVw_83PSgj1Eg",
+            .lazy = true,
+        },
+        .godot_2_1_3_windows_x86 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/2.1.3-stable/Godot_v2.1.3-stable_win32.exe.zip",
+            .hash = "N-V-__8AAAAOgAGPZICOgsO4CGND5uGtjPDNiAMwyFqRNNJL",
+            .lazy = true,
+        },
+        .godot_2_1_4_linux_x86_64 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/2.1.4-stable/Godot_v2.1.4-stable_x11.64.zip",
+            .hash = "N-V-__8AAGoxgALee2BfrFW3FK_7xogux8wZtwgBMIF6vQ5h",
+            .lazy = true,
+        },
+        .godot_2_1_4_linux_x86 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/2.1.4-stable/Godot_v2.1.4-stable_x11.32.zip",
+            .hash = "N-V-__8AABqvdAJXjx1TPlhYCk1N4UO2B0IqdY8v9oUOn0tt",
+            .lazy = true,
+        },
+        .godot_2_1_4_windows_x86_64 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/2.1.4-stable/Godot_v2.1.4-stable_win64.exe.zip",
+            .hash = "N-V-__8AAAAGxQGvO6xKdQm7N5qZRdSiGi0bbr1l-p7dpI_b",
+            .lazy = true,
+        },
+        .godot_2_1_4_windows_x86 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/2.1.4-stable/Godot_v2.1.4-stable_win32.exe.zip",
+            .hash = "N-V-__8AAAD6hQHoErOXiXSygVJHTXdZrVQ8yu0TnLDfg22y",
+            .lazy = true,
+        },
+        .godot_3_0_0_linux_x86_64 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/3.0-stable/Godot_v3.0-stable_x11.64.zip",
+            .hash = "N-V-__8AACM9vgJ4sMB8sPWkTlZOIPMj_l4hur6GmBkxLJOT",
+            .lazy = true,
+        },
+        .godot_3_0_0_linux_x86 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/3.0-stable/Godot_v3.0-stable_x11.32.zip",
+            .hash = "N-V-__8AAM5fmgI8H3-TC-N2NnJiG3gL37jzLnafoKZj2PqI",
+            .lazy = true,
+        },
+        .godot_3_0_0_windows_x86_64 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/3.0-stable/Godot_v3.0-stable_win64.exe.zip",
+            .hash = "N-V-__8AAAC4xQLDQvXz8CAVoJN_RLMcMWneHOw9c4Uaen6q",
+            .lazy = true,
+        },
+        .godot_3_0_0_windows_x86 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/3.0-stable/Godot_v3.0-stable_win32.exe.zip",
+            .hash = "N-V-__8AAADUOwIymWjnuE1LoW3YcjsKLzG4bxfs9Z29IPSn",
+            .lazy = true,
+        },
+        .godot_3_0_1_linux_x86_64 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/3.0.1-stable/Godot_v3.0.1-stable_x11.64.zip",
+            .hash = "N-V-__8AAJgowgIQBj-LTMao1URLatEWClWhrSpPIgIs88u2",
+            .lazy = true,
+        },
+        .godot_3_0_1_linux_x86 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/3.0.1-stable/Godot_v3.0.1-stable_x11.32.zip",
+            .hash = "N-V-__8AAAvrnQLs9cMweVBNC8BUuuR7Lj0-feKQ86jY31og",
+            .lazy = true,
+        },
+        .godot_3_0_1_windows_x86_64 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/3.0.1-stable/Godot_v3.0.1-stable_win64.exe.zip",
+            .hash = "N-V-__8AAAAGyQKx97oRE9ng8TOdnAnsYWRBgddg_pyghO3f",
+            .lazy = true,
+        },
+        .godot_3_0_1_windows_x86 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/3.0.1-stable/Godot_v3.0.1-stable_win32.exe.zip",
+            .hash = "N-V-__8AAABUPgJsWlacyNtNHyRQmgydaIb8eCgPH9v-pYWj",
+            .lazy = true,
+        },
+        .godot_3_0_2_linux_x86_64 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/3.0.2-stable/Godot_v3.0.2-stable_x11.64.zip",
+            .hash = "N-V-__8AAOxJwgLtjJOIzfq7gFMMpD7PlUdID3dP-2fUsj5p",
+            .lazy = true,
+        },
+        .godot_3_0_2_linux_x86 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/3.0.2-stable/Godot_v3.0.2-stable_x11.32.zip",
+            .hash = "N-V-__8AALMLngIwn_r58PMh6hG6Uw1bF-MlHKmS0ZnBihSy",
+            .lazy = true,
+        },
+        .godot_3_0_2_windows_x86_64 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/3.0.2-stable/Godot_v3.0.2-stable_win64.exe.zip",
+            .hash = "N-V-__8AAAAyyQJcwYybnWkwARVh8SLRTZvbDvNGsJW8_wQL",
+            .lazy = true,
+        },
+        .godot_3_0_2_windows_x86 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/3.0.2-stable/Godot_v3.0.2-stable_win32.exe.zip",
+            .hash = "N-V-__8AAAB8PgIl0NX3Ds29wmofHC7d3cXEE99JdjJomIeY",
+            .lazy = true,
+        },
+        .godot_3_0_3_linux_x86_64 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/3.0.3-stable/Godot_v3.0.3-stable_x11.64.zip",
+            .hash = "N-V-__8AACT25gI6nNpYq7_NuEwN2GV_KJHk4xyx4CiWKRiF",
+            .lazy = true,
+        },
+        .godot_3_0_3_linux_x86 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/3.0.3-stable/Godot_v3.0.3-stable_x11.32.zip",
+            .hash = "N-V-__8AADq9NgM95LMw01NzLgxxMQ6DW59kxRnffMp4rVRb",
+            .lazy = true,
+        },
+        .godot_3_0_3_windows_x86_64 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/3.0.3-stable/Godot_v3.0.3-stable_win64.exe.zip",
+            .hash = "N-V-__8AAAAWYwKxKAHxEVnSkx8jSaYO9kwOWbhObzngQ3zp",
+            .lazy = true,
+        },
+        .godot_3_0_3_windows_x86 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/3.0.3-stable/Godot_v3.0.3-stable_win32.exe.zip",
+            .hash = "N-V-__8AAAAkogKz6Gfh6_UmW1YN8hcKs9SxNtN5657jS7Zc",
+            .lazy = true,
+        },
+        .godot_3_0_4_linux_x86_64 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/3.0.4-stable/Godot_v3.0.4-stable_x11.64.zip",
+            .hash = "N-V-__8AALMY5wK-hFpSep-ZQ4jtYO_Jh5M6WoA46WXaMxgl",
+            .lazy = true,
+        },
+        .godot_3_0_4_linux_x86 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/3.0.4-stable/Godot_v3.0.4-stable_x11.32.zip",
+            .hash = "N-V-__8AAH7tNgPMBG5VvZGrnV1xAgO4b6lBZflKXgiG_iW_",
+            .lazy = true,
+        },
+        .godot_3_0_4_windows_x86_64 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/3.0.4-stable/Godot_v3.0.4-stable_win64.exe.zip",
+            .hash = "N-V-__8AAABCYwISkY5SLzKZRNR5oZIC__VNXfVN_4vG06D8",
+            .lazy = true,
+        },
+        .godot_3_0_4_windows_x86 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/3.0.4-stable/Godot_v3.0.4-stable_win32.exe.zip",
+            .hash = "N-V-__8AAABEogLfboEvZaWjB1ug95_4YVjM6HEI_6Qt-IOr",
+            .lazy = true,
+        },
+        .godot_3_0_5_linux_x86_64 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/3.0.5-stable/Godot_v3.0.5-stable_x11.64.zip",
+            .hash = "N-V-__8AAGw15wIsIqmUz-eDRqKj1yOmmBOY47Iru3d7qWZ4",
+            .lazy = true,
+        },
+        .godot_3_0_5_linux_x86 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/3.0.5-stable/Godot_v3.0.5-stable_x11.32.zip",
+            .hash = "N-V-__8AALHtNgNeLD6y3cAncGPsxUsEGF7edZ9qy7TNxlRx",
+            .lazy = true,
+        },
+        .godot_3_0_5_windows_x86_64 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/3.0.5-stable/Godot_v3.0.5-stable_win64.exe.zip",
+            .hash = "N-V-__8AAABSYwKZhZC59AG407Oa7sIGtdP5jtWZQBBXK-TW",
+            .lazy = true,
+        },
+        .godot_3_0_5_windows_x86 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/3.0.5-stable/Godot_v3.0.5-stable_win32.exe.zip",
+            .hash = "N-V-__8AAABUogINngc6sL53l1KiFbCR2anAsxfZzuCofKB7",
+            .lazy = true,
+        },
+        .godot_2_1_5_linux_x86_64 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/2.1.5-stable/Godot_v2.1.5-stable_x11.64.zip",
+            .hash = "N-V-__8AAGZtiAKrjYoQK2yoNmekd_dfjitISRc-_pyYwojx",
+            .lazy = true,
+        },
+        .godot_2_1_5_linux_x86 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/2.1.5-stable/Godot_v2.1.5-stable_x11.32.zip",
+            .hash = "N-V-__8AAN_efAILvLCAh9yVoUbbEUfONvxD5Af_sbcs6Rfz",
+            .lazy = true,
+        },
+        .godot_2_1_5_windows_x86_64 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/2.1.5-stable/Godot_v2.1.5-stable_win64.exe.zip",
+            .hash = "N-V-__8AAADmzgFKSvT7qUOR-2f9MPlXgimHpd0oPM48R6t8",
+            .lazy = true,
+        },
+        .godot_2_1_5_windows_x86 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/2.1.5-stable/Godot_v2.1.5-stable_win32.exe.zip",
+            .hash = "N-V-__8AAABElQEI_0qem3Z2u9S7TzuZflXeeFzE3FukP3Oj",
+            .lazy = true,
+        },
+        .godot_3_0_6_linux_x86_64 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/3.0.6-stable/Godot_v3.0.6-stable_x11.64.zip",
+            .hash = "N-V-__8AAIizFwMmWTWta3HGwLu7BfMNx_oMr34j59Kcf_em",
+            .lazy = true,
+        },
+        .godot_3_0_6_linux_x86 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/3.0.6-stable/Godot_v3.0.6-stable_x11.32.zip",
+            .hash = "N-V-__8AABELVgO3Pxe4EVLw6WJTUgFP2f0TbXewcode0-_3",
+            .lazy = true,
+        },
+        .godot_3_0_6_windows_x86_64 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/3.0.6-stable/Godot_v3.0.6-stable_win64.exe.zip",
+            .hash = "N-V-__8AAABekAKzowYHkO5-HK1G4U9_r7CUDDSvGhtVEK19",
+            .lazy = true,
+        },
+        .godot_3_0_6_windows_x86 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/3.0.6-stable/Godot_v3.0.6-stable_win32.exe.zip",
+            .hash = "N-V-__8AAADk0AI_qSqMkBcvvdU_iwDRXkGLEqamFK1KFxY2",
+            .lazy = true,
+        },
+        .godot_3_1_0_linux_x86_64 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/3.1-stable/Godot_v3.1-stable_x11.64.zip",
+            .hash = "N-V-__8AAD880wMI9G1iysgOdBjnLzL-c6daS_dj62Q6SBZr",
+            .lazy = true,
+        },
+        .godot_3_1_0_linux_x86 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/3.1-stable/Godot_v3.1-stable_x11.32.zip",
+            .hash = "N-V-__8AAHnkvgPLoOI8M6ih0dhkL-mPH2N1sHPYHMo4ZKSd",
+            .lazy = true,
+        },
+        .godot_3_1_0_windows_x86_64 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/3.1-stable/Godot_v3.1-stable_win64.exe.zip",
+            .hash = "N-V-__8AADgvIwOx_d8n33_p_zQ19s9HDmnGG_pDyQVHmP0j",
+            .lazy = true,
+        },
+        .godot_3_1_0_windows_x86 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/3.1-stable/Godot_v3.1-stable_win32.exe.zip",
+            .hash = "N-V-__8AADjlgQNTt4g6xjr7zl4yT1BU_Fm5zZC8PGgnCc-z",
+            .lazy = true,
+        },
+        .godot_3_1_1_linux_x86_64 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/3.1.1-stable/Godot_v3.1.1-stable_x11.64.zip",
+            .hash = "N-V-__8AAO3z2QNFi0Hfzt1aHOAAZmCGXDuX1F-TuuRIrViR",
+            .lazy = true,
+        },
+        .godot_3_1_1_linux_x86 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/3.1.1-stable/Godot_v3.1.1-stable_x11.32.zip",
+            .hash = "N-V-__8AAJstxgMBzTOuJMewK0pop_AEmUQ9_-gigW3uwrNT",
+            .lazy = true,
+        },
+        .godot_3_1_1_windows_x86_64 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/3.1.1-stable/Godot_v3.1.1-stable_win64.exe.zip",
+            .hash = "N-V-__8AADhxKgM5KkKnxu4qM7viEgBpRL_it18RSBC-pF1E",
+            .lazy = true,
+        },
+        .godot_3_1_1_windows_x86 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/3.1.1-stable/Godot_v3.1.1-stable_win32.exe.zip",
+            .hash = "N-V-__8AADiJiwNL3cDHGp6Nh1kNjLjQapJ_VW5XFjMs_G2q",
+            .lazy = true,
+        },
+        .godot_2_1_6_linux_x86_64 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/2.1.6-stable/Godot_v2.1.6-stable_x11.64.zip",
+            .hash = "N-V-__8AAOzXiAKNe0dEEaaF3374CsbKhrAivKAH-jKwDwFs",
+            .lazy = true,
+        },
+        .godot_2_1_6_linux_x86 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/2.1.6-stable/Godot_v2.1.6-stable_x11.32.zip",
+            .hash = "N-V-__8AADQnfQJDnJGGhQbUzrzdY_JbSNtyRZBUZd7_yOfu",
+            .lazy = true,
+        },
+        .godot_2_1_6_windows_x86_64 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/2.1.6-stable/Godot_v2.1.6-stable_win64.exe.zip",
+            .hash = "N-V-__8AAAB2ywFBEDTKPIuCeZCYGTLMM3jbfd2iRZttpPgt",
+            .lazy = true,
+        },
+        .godot_2_1_6_windows_x86 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/2.1.6-stable/Godot_v2.1.6-stable_win32.exe.zip",
+            .hash = "N-V-__8AAABMjgHFrOaQx5rdd0YIYLe9h029loA8-d0ieBU3",
+            .lazy = true,
+        },
+        .godot_3_1_2_linux_x86_64 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/3.1.2-stable/Godot_v3.1.2-stable_x11.64.zip",
+            .hash = "N-V-__8AAPkL3AMC-4Tia-VkmdI9Vu4--iOa8HUk8iZpvmqq",
+            .lazy = true,
+        },
+        .godot_3_1_2_linux_x86 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/3.1.2-stable/Godot_v3.1.2-stable_x11.32.zip",
+            .hash = "N-V-__8AAKpkyAPxHUdLVALPHETfoiQRCko8amdNnEmAAFsI",
+            .lazy = true,
+        },
+        .godot_3_1_2_windows_x86_64 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/3.1.2-stable/Godot_v3.1.2-stable_win64.exe.zip",
+            .hash = "N-V-__8AAPAYLQP__KEtZLke8rLfeFi9F9C2zmYUbpVEmpoc",
+            .lazy = true,
+        },
+        .godot_3_1_2_windows_x86 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/3.1.2-stable/Godot_v3.1.2-stable_win32.exe.zip",
+            .hash = "N-V-__8AAPC2jgNbn3zgfqdEJeMNheSBx6Zj_DvsDH1HlaDM",
+            .lazy = true,
+        },
+        .godot_3_2_0_linux_x86_64 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/3.2-stable/Godot_v3.2-stable_x11.64.zip",
+            .hash = "N-V-__8AAGxzPgSu2yEL9AlbNuESjZA3VJg7JaeZWd9_5E0k",
+            .lazy = true,
+        },
+        .godot_3_2_0_linux_x86 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/3.2-stable/Godot_v3.2-stable_x11.32.zip",
+            .hash = "N-V-__8AABmxFwQkoOGB15ghrn3rnZsyww2oe43gxEwHWQse",
+            .lazy = true,
+        },
+        .godot_3_2_0_windows_x86_64 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/3.2-stable/Godot_v3.2-stable_win64.exe.zip",
+            .hash = "N-V-__8AAPDazwMSPfXELEadCxItd_FdCNuLCKqfyGT3Yaet",
+            .lazy = true,
+        },
+        .godot_3_2_0_windows_x86 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/3.2-stable/Godot_v3.2-stable_win32.exe.zip",
+            .hash = "N-V-__8AAPCmQQQ1vXo5mSMSSO2BDKTo7kc1fZRmdbvawDPW",
+            .lazy = true,
+        },
+        .godot_3_2_1_linux_x86_64 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/3.2.1-stable/Godot_v3.2.1-stable_x11.64.zip",
+            .hash = "N-V-__8AAOd_QARndn40GxqM29eEwYoWpYQ_47FgAa6Z51Av",
+            .lazy = true,
+        },
+        .godot_3_2_1_linux_x86 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/3.2.1-stable/Godot_v3.2.1-stable_x11.32.zip",
+            .hash = "N-V-__8AAFVnGgTAi5pLSstcm_NWpo0YJjhffcYv-WiZGrYR",
+            .lazy = true,
+        },
+        .godot_3_2_1_windows_x86_64 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/3.2.1-stable/Godot_v3.2.1-stable_win64.exe.zip",
+            .hash = "N-V-__8AAPDs0QMJXmQvUWj_tBgKBOIB7aO_kG5y9-VxOI8H",
+            .lazy = true,
+        },
+        .godot_3_2_1_windows_x86 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/3.2.1-stable/Godot_v3.2.1-stable_win32.exe.zip",
+            .hash = "N-V-__8AAPAYRAQfS5uOdEEAhmObHJTO1Dkc_vgiuFIH8pPd",
+            .lazy = true,
+        },
+        .godot_3_2_2_linux_x86_64 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/3.2.2-stable/Godot_v3.2.2-stable_x11.64.zip",
+            .hash = "N-V-__8AADWCTAQ7ypjF0B-BBF-xDoWdOPb5FZK0X1HqXzSk",
+            .lazy = true,
+        },
+        .godot_3_2_2_linux_x86 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/3.2.2-stable/Godot_v3.2.2-stable_x11.32.zip",
+            .hash = "N-V-__8AAGQkJgQoAczBAPkLHRLOWya6LPv4YW7Q2aE1A_IJ",
+            .lazy = true,
+        },
+        .godot_3_2_2_windows_x86_64 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/3.2.2-stable/Godot_v3.2.2-stable_win64.exe.zip",
+            .hash = "N-V-__8AAJgZ3APUoR0puNK8m79QKruvb201_qFXeya9vMh_",
+            .lazy = true,
+        },
+        .godot_3_2_2_windows_x86 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/3.2.2-stable/Godot_v3.2.2-stable_win32.exe.zip",
+            .hash = "N-V-__8AAJg3TwRvw8MP3xcEvCzpK3lzPUr-kjlKx5jhn5w0",
+            .lazy = true,
+        },
+        .godot_3_2_3_linux_x86_64 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/3.2.3-stable/Godot_v3.2.3-stable_x11.64.zip",
+            .hash = "N-V-__8AALbgTwQ8BFOLLfiQvL0tFyG6dkxSfvXsvsjaCymI",
+            .lazy = true,
+        },
+        .godot_3_2_3_linux_x86 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/3.2.3-stable/Godot_v3.2.3-stable_x11.32.zip",
+            .hash = "N-V-__8AAC1oKQR2z5B0koZVJZ5UxsXHPOU3UTkbEYsR_CFl",
+            .lazy = true,
+        },
+        .godot_3_2_3_windows_x86_64 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/3.2.3-stable/Godot_v3.2.3-stable_win64.exe.zip",
+            .hash = "N-V-__8AAJhf3wMZlGJDeRFy0XGbPgIfSrYOPK_Wbt2Tilk2",
+            .lazy = true,
+        },
+        .godot_3_2_3_windows_x86 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/3.2.3-stable/Godot_v3.2.3-stable_win32.exe.zip",
+            .hash = "N-V-__8AAJjhUgT2TmMRl5HFgaC2ubAe1alVkHIQLpkihhZU",
+            .lazy = true,
+        },
+        .godot_3_3_0_linux_x86_64 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/3.3-stable/Godot_v3.3-stable_x11.64.zip",
+            .hash = "N-V-__8AAMjYiQRzqWQvVDrH_3R2-cEUVWkm-NSSuimQVak1",
+            .lazy = true,
+        },
+        .godot_3_3_0_linux_x86 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/3.3-stable/Godot_v3.3-stable_x11.32.zip",
+            .hash = "N-V-__8AADwi-wMIwA0V0q-R8ZnIVAQ_Udfi5mXgWBP02zdl",
+            .lazy = true,
+        },
+        .godot_3_3_0_windows_x86_64 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/3.3-stable/Godot_v3.3-stable_win64.exe.zip",
+            .hash = "N-V-__8AAJhLVARiglVTCgs3HySaQWK1deUVxOfzW9sCXfTq",
+            .lazy = true,
+        },
+        .godot_3_3_0_windows_x86 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/3.3-stable/Godot_v3.3-stable_win32.exe.zip",
+            .hash = "N-V-__8AAKiFCARYxxivpVNtJrqs8qVPHiK6wlY3aQzBdqob",
+            .lazy = true,
+        },
+        .godot_3_3_0_macos_universal = .{
+            .url = "https://github.com/godotengine/godot/releases/download/3.3-stable/Godot_v3.3-stable_osx.universal.zip",
+            .hash = "N-V-__8AAHSvmggM46g_hXHSkeKeBGcoM4t6XqlIYia0XF-T",
+            .lazy = true,
+        },
+        .godot_3_3_1_linux_x86_64 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/3.3.1-stable/Godot_v3.3.1-stable_x11.64.zip",
+            .hash = "N-V-__8AAOjYiQSbY2WZAulCkE-ba7ApmOkFMzxgNKrcBm4A",
+            .lazy = true,
+        },
+        .godot_3_3_1_linux_x86 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/3.3.1-stable/Godot_v3.3.1-stable_x11.32.zip",
+            .hash = "N-V-__8AAHTIJQSDY0-z9BEt1VPxv2nGi8XRyUiFwDnOSZpg",
+            .lazy = true,
+        },
+        .godot_3_3_1_windows_x86_64 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/3.3.1-stable/Godot_v3.3.1-stable_win64.exe.zip",
+            .hash = "N-V-__8AAJjNVASH0rnRowHB-npE0dXU_VckPCJxEUuS2K1j",
+            .lazy = true,
+        },
+        .godot_3_3_1_windows_x86 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/3.3.1-stable/Godot_v3.3.1-stable_win32.exe.zip",
+            .hash = "N-V-__8AAKgjCAQkhzmcGahh5q4z4ccTWlIlCp-YMMtslL8e",
+            .lazy = true,
+        },
+        .godot_3_3_1_macos_universal = .{
+            .url = "https://github.com/godotengine/godot/releases/download/3.3.1-stable/Godot_v3.3.1-stable_osx.universal.zip",
+            .hash = "N-V-__8AALqRrAhQb3zL0qKwsHHF2DXaXPUfJEhnPiRnPSZz",
+            .lazy = true,
+        },
+        .godot_3_3_2_linux_x86_64 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/3.3.2-stable/Godot_v3.3.2-stable_x11.64.zip",
+            .hash = "N-V-__8AAOgIigTx5YYi8qMANaoSNoY7SBymYpJ4ddbFgEzB",
+            .lazy = true,
+        },
+        .godot_3_3_2_linux_x86 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/3.3.2-stable/Godot_v3.3.2-stable_x11.32.zip",
+            .hash = "N-V-__8AAHTYJQRs8mcnGgh-hbOYHJ4Jsp8d76pPJxxZdGAn",
+            .lazy = true,
+        },
+        .godot_3_3_2_windows_x86_64 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/3.3.2-stable/Godot_v3.3.2-stable_win64.exe.zip",
+            .hash = "N-V-__8AAJjXVATcOhf7Xg4_kKTakxj4lKUK2yXM60F8ilhx",
+            .lazy = true,
+        },
+        .godot_3_3_2_windows_x86 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/3.3.2-stable/Godot_v3.3.2-stable_win32.exe.zip",
+            .hash = "N-V-__8AAKg9CAS34EEPr60EUtYKLo08XiNmMxvxOXFYL3Io",
+            .lazy = true,
+        },
+        .godot_3_3_2_macos_universal = .{
+            .url = "https://github.com/godotengine/godot/releases/download/3.3.2-stable/Godot_v3.3.2-stable_osx.universal.zip",
+            .hash = "N-V-__8AAEwSrQiqS6H1CLMheTO1shnNcMerJlhbABpSvrpk",
+            .lazy = true,
+        },
+        .godot_3_3_3_linux_x86_64 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/3.3.3-stable/Godot_v3.3.3-stable_x11.64.zip",
+            .hash = "N-V-__8AACgZjATLpTxjA2ofxZ3HguADf7WObnhMwYtnZ_AC",
+            .lazy = true,
+        },
+        .godot_3_3_3_linux_x86 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/3.3.3-stable/Godot_v3.3.3-stable_x11.32.zip",
+            .hash = "N-V-__8AANSoJwTx1ZIttysER5mMgPvf4xjF0Ww7H7Vaw_J-",
+            .lazy = true,
+        },
+        .godot_3_3_3_windows_x86_64 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/3.3.3-stable/Godot_v3.3.3-stable_win64.exe.zip",
+            .hash = "N-V-__8AAJi3VgQy4Tp9il5zt0tJEorShlGs1fvidYcZsduy",
+            .lazy = true,
+        },
+        .godot_3_3_3_windows_x86 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/3.3.3-stable/Godot_v3.3.3-stable_win32.exe.zip",
+            .hash = "N-V-__8AAKhBCgTB-iYmF_hJtUgmr3ovaCkvsWcJ1AtNtf86",
+            .lazy = true,
+        },
+        .godot_3_3_3_macos_universal = .{
+            .url = "https://github.com/godotengine/godot/releases/download/3.3.3-stable/Godot_v3.3.3-stable_osx.universal.zip",
+            .hash = "N-V-__8AAPwYsQghLNT-JvY49HFNlMpbIG3AK-AzW4ra0e1v",
+            .lazy = true,
+        },
+        .godot_3_3_4_linux_x86_64 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/3.3.4-stable/Godot_v3.3.4-stable_x11.64.zip",
+            .hash = "N-V-__8AACi5jAQ3hGbgYMZnqd_HKk3_xNMpxsr37Gz16Ksa",
+            .lazy = true,
+        },
+        .godot_3_3_4_linux_x86 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/3.3.4-stable/Godot_v3.3.4-stable_x11.32.zip",
+            .hash = "N-V-__8AANQYKARPfnB6BhP0XcY8s-qMTqb6vowzksBhLM2W",
+            .lazy = true,
+        },
+        .godot_3_3_4_windows_x86_64 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/3.3.4-stable/Godot_v3.3.4-stable_win64.exe.zip",
+            .hash = "N-V-__8AAJhDVwS10Ay7mD9IGN_MMHRA3bekWbpxFFs1Zi9l",
+            .lazy = true,
+        },
+        .godot_3_3_4_windows_x86 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/3.3.4-stable/Godot_v3.3.4-stable_win32.exe.zip",
+            .hash = "N-V-__8AAKjNCgRJcavgd_dP3oY_32EbjgMWOfwN-9RgAnp1",
+            .lazy = true,
+        },
+        .godot_3_3_4_macos_universal = .{
+            .url = "https://github.com/godotengine/godot/releases/download/3.3.4-stable/Godot_v3.3.4-stable_osx.universal.zip",
+            .hash = "N-V-__8AAJzZsQgvrBfft7kNiSrA_urAQVSbvpaD2lfzcwpc",
+            .lazy = true,
+        },
+        .godot_3_4_0_linux_x86_64 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/3.4-stable/Godot_v3.4-stable_x11.64.zip",
+            .hash = "N-V-__8AAKjnvgRaAZ2XDgyDAdZR0x-tZzmkzHAjNK1eiovF",
+            .lazy = true,
+        },
+        .godot_3_4_0_linux_x86 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/3.4-stable/Godot_v3.4-stable_x11.32.zip",
+            .hash = "N-V-__8AAJABPwSJelWxB9kj2tBYsERUOC3vgy5gE4fLRnw8",
+            .lazy = true,
+        },
+        .godot_3_4_0_windows_x86_64 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/3.4-stable/Godot_v3.4-stable_win64.exe.zip",
+            .hash = "N-V-__8AAJgBnASluwKmw15FLH_ZJ_08rlmgT8GAaR4xhtNZ",
+            .lazy = true,
+        },
+        .godot_3_4_0_windows_x86 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/3.4-stable/Godot_v3.4-stable_win32.exe.zip",
+            .hash = "N-V-__8AAKgZUwSfITzmIYrQhBIu3Ex2U8g1NfBDkcIdWvBc",
+            .lazy = true,
+        },
+        .godot_3_4_0_macos_universal = .{
+            .url = "https://github.com/godotengine/godot/releases/download/3.4-stable/Godot_v3.4-stable_osx.universal.zip",
+            .hash = "N-V-__8AAIPwTQmH9TnIyuE9mMcO12PbGvshnBV2IbzzL964",
+            .lazy = true,
+        },
+        .godot_3_4_1_linux_x86_64 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/3.4.1-stable/Godot_v3.4.1-stable_x11.64.zip",
+            .hash = "N-V-__8AAKjnuQTbQZhp9ABRLPqwhNzhQ3eHk6piYqE1CWx9",
+            .lazy = true,
+        },
+        .godot_3_4_1_linux_x86 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/3.4.1-stable/Godot_v3.4.1-stable_x11.32.zip",
+            .hash = "N-V-__8AAJABOgRovDidB-UD3y6GNO2hR8WbL6j1X5mV7_-_",
+            .lazy = true,
+        },
+        .godot_3_4_1_windows_x86_64 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/3.4.1-stable/Godot_v3.4.1-stable_win64.exe.zip",
+            .hash = "N-V-__8AAJgVlwSXGfIN1tw-0bokBxZkg0vEKR3HHvzyyj_Y",
+            .lazy = true,
+        },
+        .godot_3_4_1_windows_x86 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/3.4.1-stable/Godot_v3.4.1-stable_win32.exe.zip",
+            .hash = "N-V-__8AAKgTTgQNmSCwE62g8FDeshxISAPsufwenw79i1MG",
+            .lazy = true,
+        },
+        .godot_3_4_1_macos_universal = .{
+            .url = "https://github.com/godotengine/godot/releases/download/3.4.1-stable/Godot_v3.4.1-stable_osx.universal.zip",
+            .hash = "N-V-__8AAPcrRAmCrmzOlub-Gq4Qu1WjLiGD8OC4qIQVKkmL",
+            .lazy = true,
+        },
+        .godot_3_4_2_linux_x86_64 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/3.4.2-stable/Godot_v3.4.2-stable_x11.64.zip",
+            .hash = "N-V-__8AAKg3twQ1GPmyZdg4rBYynZNVrFPpyN-4oC3pIsZB",
+            .lazy = true,
+        },
+        .godot_3_4_2_linux_x86 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/3.4.2-stable/Godot_v3.4.2-stable_x11.32.zip",
+            .hash = "N-V-__8AAJBRNwQQDCuc0gbWe5v2XdBLtoZA3TOQU0Z9WOZ5",
+            .lazy = true,
+        },
+        .godot_3_4_2_windows_x86_64 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/3.4.2-stable/Godot_v3.4.2-stable_win64.exe.zip",
+            .hash = "N-V-__8AAJhtlATKg-79Ad-wtdOfy_rG3JPrJSsURHOrB0EP",
+            .lazy = true,
+        },
+        .godot_3_4_2_windows_x86 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/3.4.2-stable/Godot_v3.4.2-stable_win32.exe.zip",
+            .hash = "N-V-__8AAKhxSwROKpPwvXL9ExVTzoAJBoqi9RopGh-UFw60",
+            .lazy = true,
+        },
+        .godot_3_4_2_macos_universal = .{
+            .url = "https://github.com/godotengine/godot/releases/download/3.4.2-stable/Godot_v3.4.2-stable_osx.universal.zip",
+            .hash = "N-V-__8AAHemPgk6iQgIUpUp7TYj5qDUdnejF6bCLa-ubKXA",
+            .lazy = true,
+        },
+        .godot_3_4_3_linux_x86_64 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/3.4.3-stable/Godot_v3.4.3-stable_x11.64.zip",
+            .hash = "N-V-__8AAKj3twSLFBYQWhb3rDu-hD4XtwT8K99Cir0BCkNj",
+            .lazy = true,
+        },
+        .godot_3_4_3_linux_x86 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/3.4.3-stable/Godot_v3.4.3-stable_x11.32.zip",
+            .hash = "N-V-__8AAJAhOATSI2Izz8uJxTSkPvi9yuEwm8vEZAcnUKfb",
+            .lazy = true,
+        },
+        .godot_3_4_3_windows_x86_64 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/3.4.3-stable/Godot_v3.4.3-stable_win64.exe.zip",
+            .hash = "N-V-__8AAMz1lATVG0_OH0DecRsaaOCyZ3SHRCHHR_yk6bYy",
+            .lazy = true,
+        },
+        .godot_3_4_3_windows_x86 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/3.4.3-stable/Godot_v3.4.3-stable_win32.exe.zip",
+            .hash = "N-V-__8AANzrSwT1wyQk7b6rxclc0fmJY18dv78pYzQaq9Wc",
+            .lazy = true,
+        },
+        .godot_3_4_3_macos_universal = .{
+            .url = "https://github.com/godotengine/godot/releases/download/3.4.3-stable/Godot_v3.4.3-stable_osx.universal.zip",
+            .hash = "N-V-__8AAL9KQAkDBToamlub1BzvMepffWe5rbs7VpaC798U",
+            .lazy = true,
+        },
+        .godot_3_4_4_linux_x86_64 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/3.4.4-stable/Godot_v3.4.4-stable_x11.64.zip",
+            .hash = "N-V-__8AAKgHuASHMKnk8exy4eFzNnNiZCotlCBye5Ec5FpB",
+            .lazy = true,
+        },
+        .godot_3_4_4_linux_x86 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/3.4.4-stable/Godot_v3.4.4-stable_x11.32.zip",
+            .hash = "N-V-__8AAJAxOASMYLeQPJ8ossQ_8XRq6paA3j9PwtRFxMtL",
+            .lazy = true,
+        },
+        .godot_3_4_4_windows_x86_64 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/3.4.4-stable/Godot_v3.4.4-stable_win64.exe.zip",
+            .hash = "N-V-__8AAMwDlQRSMBQZYnY1mRGx9PLzO3x7pwpB9X_QuTDJ",
+            .lazy = true,
+        },
+        .godot_3_4_4_windows_x86 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/3.4.4-stable/Godot_v3.4.4-stable_win32.exe.zip",
+            .hash = "N-V-__8AANwJTAQ8RhnmWiO4ZKtyO2WdTUHsZ6YcKbme3bvY",
+            .lazy = true,
+        },
+        .godot_3_4_4_macos_universal = .{
+            .url = "https://github.com/godotengine/godot/releases/download/3.4.4-stable/Godot_v3.4.4-stable_osx.universal.zip",
+            .hash = "N-V-__8AAO-KQAm5CFZtjMeqA6tE4Ef45NJDRXCkZ0S8Mhlx",
+            .lazy = true,
+        },
+        .godot_3_4_5_linux_x86_64 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/3.4.5-stable/Godot_v3.4.5-stable_x11.64.zip",
+            .hash = "N-V-__8AAKinuAR4EjUmsMvepI69uprRLiD6T_JRTjdUEmp2",
+            .lazy = true,
+        },
+        .godot_3_4_5_linux_x86 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/3.4.5-stable/Godot_v3.4.5-stable_x11.32.zip",
+            .hash = "N-V-__8AAJDBOARdeXyCCz_Xs0uHZO97vZHLLzQjkKoW59oO",
+            .lazy = true,
+        },
+        .godot_3_4_5_windows_x86_64 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/3.4.5-stable/Godot_v3.4.5-stable_win64.exe.zip",
+            .hash = "N-V-__8AAGitlQQ70xxTvXEr9Ri4xpgKQl2eYxgaHCrbPzK1",
+            .lazy = true,
+        },
+        .godot_3_4_5_windows_x86 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/3.4.5-stable/Godot_v3.4.5-stable_win32.exe.zip",
+            .hash = "N-V-__8AAHinTASfymaXjmh_rszwrJKvMjw4iYuzxqGZ8xPq",
+            .lazy = true,
+        },
+        .godot_3_4_5_macos_universal = .{
+            .url = "https://github.com/godotengine/godot/releases/download/3.4.5-stable/Godot_v3.4.5-stable_osx.universal.zip",
+            .hash = "N-V-__8AAP6RQQnpFytjzKZHiKeNkdomVpTNkNvks5x51rir",
+            .lazy = true,
+        },
+        .godot_3_5_0_linux_x86_64 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/3.5-stable/Godot_v3.5-stable_x11.64.zip",
+            .hash = "N-V-__8AAEi4sgTnHF5kUsukIGZYZcfPtvL6yjl_Ns-ChUHY",
+            .lazy = true,
+        },
+        .godot_3_5_0_linux_x86 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/3.5-stable/Godot_v3.5-stable_x11.32.zip",
+            .hash = "N-V-__8AABByMgTElsRT_T8w6UWOtxMxappAHskbwBqUFxis",
+            .lazy = true,
+        },
+        .godot_3_5_0_windows_x86_64 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/3.5-stable/Godot_v3.5-stable_win64.exe.zip",
+            .hash = "N-V-__8AAJoHiwQ6TIhD4InhysnkLmgGPc9OtPMi3R8vgm9U",
+            .lazy = true,
+        },
+        .godot_3_5_0_windows_x86 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/3.5-stable/Godot_v3.5-stable_win32.exe.zip",
+            .hash = "N-V-__8AAKrFRARb2b65o4VlnfN64pfoSHgZAEi4jx_L04q2",
+            .lazy = true,
+        },
+        .godot_3_5_0_macos_universal = .{
+            .url = "https://github.com/godotengine/godot/releases/download/3.5-stable/Godot_v3.5-stable_osx.universal.zip",
+            .hash = "N-V-__8AAJqAWwg2e3CuPq35BWyuUtsZCzkCIwb6w4lz7K9Y",
+            .lazy = true,
+        },
+        .godot_3_5_1_linux_x86_64 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/3.5.1-stable/Godot_v3.5.1-stable_x11.64.zip",
+            .hash = "N-V-__8AAGgYtgQzZ-jBd5a3BA63v6kY3dwBcMN8gZy0KGQt",
+            .lazy = true,
+        },
+        .godot_3_5_1_linux_x86 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/3.5.1-stable/Godot_v3.5.1-stable_x11.32.zip",
+            .hash = "N-V-__8AABDiNQRf03ty7v_WsbrfAvPlBk62LK2sx6ptQEln",
+            .lazy = true,
+        },
+        .godot_3_5_1_windows_x86_64 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/3.5.1-stable/Godot_v3.5.1-stable_win64.exe.zip",
+            .hash = "N-V-__8AAMRvjgQbtqHLrH_l80XyTdkiOa6IzRH0O1j-ezuE",
+            .lazy = true,
+        },
+        .godot_3_5_1_windows_x86 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/3.5.1-stable/Godot_v3.5.1-stable_win32.exe.zip",
+            .hash = "N-V-__8AANRBSARbOfa6DdZPLMc_EV1Cj4F6kExWJotkAncO",
+            .lazy = true,
+        },
+        .godot_3_5_1_macos_universal = .{
+            .url = "https://github.com/godotengine/godot/releases/download/3.5.1-stable/Godot_v3.5.1-stable_osx.universal.zip",
+            .hash = "N-V-__8AAH56YQj_SJ8L9XNSvesJrPY0X3L9ZocS-CcwZuS9",
+            .lazy = true,
+        },
+        .godot_4_0_0_windows_x86_64 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/4.0-stable/Godot_v4.0-stable_win64.exe.zip",
+            .hash = "N-V-__8AACAj1Qa4sR3MNnhjrGTcpF7vYnPWevJhe_otriaq",
+            .lazy = true,
+        },
+        .godot_4_0_0_windows_x86 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/4.0-stable/Godot_v4.0-stable_win32.exe.zip",
+            .hash = "N-V-__8AACCpswaRcUFjlJo9LjS6J-og36X4F5KxSCVnuS3i",
+            .lazy = true,
+        },
+        .godot_4_0_0_macos_universal = .{
+            .url = "https://github.com/godotengine/godot/releases/download/4.0-stable/Godot_v4.0-stable_macos.universal.zip",
+            .hash = "N-V-__8AAIUFeA2OB48Mgr0QGq0jxm72XdkEUcgIOnGZaMke",
+            .lazy = true,
+        },
+        .godot_4_0_0_linux_x86_64 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/4.0-stable/Godot_v4.0-stable_linux.x86_64.zip",
+            .hash = "N-V-__8AACAI4QbUuTBAmpvFIyNbcnc7hFy30jEeY04CnvdL",
+            .lazy = true,
+        },
+        .godot_4_0_0_linux_x86 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/4.0-stable/Godot_v4.0-stable_linux.x86_32.zip",
+            .hash = "N-V-__8AAGCLQwbNuTSR82m9jrUWby_vcQndnxwkoscEu91B",
+            .lazy = true,
+        },
+        .godot_3_5_2_linux_x86_64 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/3.5.2-stable/Godot_v3.5.2-stable_x11.64.zip",
+            .hash = "N-V-__8AAGiIuAQguMqVL27gkfLrUcVNeR4oGnPDBPBnofXk",
+            .lazy = true,
+        },
+        .godot_3_5_2_linux_x86 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/3.5.2-stable/Godot_v3.5.2-stable_x11.32.zip",
+            .hash = "N-V-__8AABBCOARBed9EALWvVcs013famzNGPQM0TDq4Cs-v",
+            .lazy = true,
+        },
+        .godot_3_5_2_windows_x86_64 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/3.5.2-stable/Godot_v3.5.2-stable_win64.exe.zip",
+            .hash = "N-V-__8AAMSNkAQBygsISJICIO6vjTGuEZpG10W9NFWUKjRj",
+            .lazy = true,
+        },
+        .godot_3_5_2_windows_x86 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/3.5.2-stable/Godot_v3.5.2-stable_win32.exe.zip",
+            .hash = "N-V-__8AANSBSgTQlErpXL6-H7y1J2WVdf_Z9m_q0EBLjU7r",
+            .lazy = true,
+        },
+        .godot_3_5_2_macos_universal = .{
+            .url = "https://github.com/godotengine/godot/releases/download/3.5.2-stable/Godot_v3.5.2-stable_osx.universal.zip",
+            .hash = "N-V-__8AAN6KZgh4RvG_r7scSik3A7KdZ5QcNkzhFYXenDIW",
+            .lazy = true,
+        },
+        .godot_4_0_1_windows_x86_64 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/4.0.1-stable/Godot_v4.0.1-stable_win64.exe.zip",
+            .hash = "N-V-__8AACAH3AaJqPWThPW3v9D-5AOp-Py-Kx8nW5MsSdC1",
+            .lazy = true,
+        },
+        .godot_4_0_1_windows_x86 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/4.0.1-stable/Godot_v4.0.1-stable_win32.exe.zip",
+            .hash = "N-V-__8AACCBugY2qEOmDhoLVFxdJGCI3wVFN1BW7SPM5t-W",
+            .lazy = true,
+        },
+        .godot_4_0_1_macos_universal = .{
+            .url = "https://github.com/godotengine/godot/releases/download/4.0.1-stable/Godot_v4.0.1-stable_macos.universal.zip",
+            .hash = "N-V-__8AAJkYhg1BRQKvjBlxG2I-vK4-bFPAQs9eUHhowtIp",
+            .lazy = true,
+        },
+        .godot_4_0_1_linux_x86_64 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/4.0.1-stable/Godot_v4.0.1-stable_linux.x86_64.zip",
+            .hash = "N-V-__8AAOD55wbu-2zIva9ljyxEviLG1htpkfYrjErVqAB7",
+            .lazy = true,
+        },
+        .godot_4_0_1_linux_x86 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/4.0.1-stable/Godot_v4.0.1-stable_linux.x86_32.zip",
+            .hash = "N-V-__8AAEBsSgbN8gpX3m2yq55ZxgGHb8o98RSvJbQKzfjE",
+            .lazy = true,
+        },
+        .godot_4_0_2_windows_x86_64 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/4.0.2-stable/Godot_v4.0.2-stable_win64.exe.zip",
+            .hash = "N-V-__8AACAf5Ab5t1AXOP1Q0fT1ZqW2A3MEKZ9RFTksxUdo",
+            .lazy = true,
+        },
+        .godot_4_0_2_windows_x86 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/4.0.2-stable/Godot_v4.0.2-stable_win32.exe.zip",
+            .hash = "N-V-__8AACCjwgbpfs3hBKPPWLQCj3sTl-5z6h4ohSCj4LmG",
+            .lazy = true,
+        },
+        .godot_4_0_2_macos_universal = .{
+            .url = "https://github.com/godotengine/godot/releases/download/4.0.2-stable/Godot_v4.0.2-stable_macos.universal.zip",
+            .hash = "N-V-__8AAFkrmA14tU7b690_5rwUMF6lRyVlEgdyfcbwNb37",
+            .lazy = true,
+        },
+        .godot_4_0_2_linux_x86_64 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/4.0.2-stable/Godot_v4.0.2-stable_linux.x86_64.zip",
+            .hash = "N-V-__8AAACc8AZEMLY0qgoWPX8V5mPkl7cfjbBMJaJJ4iLK",
+            .lazy = true,
+        },
+        .godot_4_0_2_linux_x86 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/4.0.2-stable/Godot_v4.0.2-stable_linux.x86_32.zip",
+            .hash = "N-V-__8AACB9UgZsnMdCTaXnrSqjGIT0drcvPiRmAl1dHKTO",
+            .lazy = true,
+        },
+        .godot_4_0_3_windows_x86_64 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/4.0.3-stable/Godot_v4.0.3-stable_win64.exe.zip",
+            .hash = "N-V-__8AACAz7gbJ3HPC6uLVkMEnE7NZEyfCW0Bt1FOLDkRS",
+            .lazy = true,
+        },
+        .godot_4_0_3_windows_x86 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/4.0.3-stable/Godot_v4.0.3-stable_win32.exe.zip",
+            .hash = "N-V-__8AACBzzQbKYjrE-t2N-gtIbYomKtgcrzNHG2RVXQbE",
+            .lazy = true,
+        },
+        .godot_4_0_3_macos_universal = .{
+            .url = "https://github.com/godotengine/godot/releases/download/4.0.3-stable/Godot_v4.0.3-stable_macos.universal.zip",
+            .hash = "N-V-__8AAIrDpg3kMYFojYO2la6oyOdjmD3EqZWACsG_-IDJ",
+            .lazy = true,
+        },
+        .godot_4_0_3_linux_x86_64 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/4.0.3-stable/Godot_v4.0.3-stable_linux.x86_64.zip",
+            .hash = "N-V-__8AACAc-gZkIEbuEn7RMfSpTpj1GUVZpBzkPrXH7fqG",
+            .lazy = true,
+        },
+        .godot_4_0_3_linux_x86 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/4.0.3-stable/Godot_v4.0.3-stable_linux.x86_32.zip",
+            .hash = "N-V-__8AAEDdWQacuxgVw5TafKAA7zFiHWCu6rXxsh6C9yiv",
+            .lazy = true,
+        },
+        .godot_4_1_0_windows_x86_64 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/4.1-stable/Godot_v4.1-stable_win64.exe.zip",
+            .hash = "N-V-__8AACBrIQdkozejsSW5TK4fenVQG7Mndcawo16J8bKO",
+            .lazy = true,
+        },
+        .godot_4_1_0_windows_x86 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/4.1-stable/Godot_v4.1-stable_win32.exe.zip",
+            .hash = "N-V-__8AACC3AQegSAXjxLqN53EfFA8EGZkaeiUYD40fp2qb",
+            .lazy = true,
+        },
+        .godot_4_1_0_macos_universal = .{
+            .url = "https://github.com/godotengine/godot/releases/download/4.1-stable/Godot_v4.1-stable_macos.universal.zip",
+            .hash = "N-V-__8AAJb_Aw4y-z3wvAbyK2kScHwxm5XvNd-Ynnsnhnkn",
+            .lazy = true,
+        },
+        .godot_4_1_0_linux_x86_64 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/4.1-stable/Godot_v4.1-stable_linux.x86_64.zip",
+            .hash = "N-V-__8AAADeLAfcKVU5mXKBZG61Wwzp2cTvt6DA5x3bK6V-",
+            .lazy = true,
+        },
+        .godot_4_1_0_linux_x86 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/4.1-stable/Godot_v4.1-stable_linux.x86_32.zip",
+            .hash = "N-V-__8AAMDOigbsZoQZaK-83dNOg1cy5xKUB55WrqJmWYYt",
+            .lazy = true,
+        },
+        .godot_4_1_1_windows_x86_64 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/4.1.1-stable/Godot_v4.1.1-stable_win64.exe.zip",
+            .hash = "N-V-__8AACDZIQcEZGSrq33hzQ-1JlXOwmItc3coyrgB-dZs",
+            .lazy = true,
+        },
+        .godot_4_1_1_windows_x86 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/4.1.1-stable/Godot_v4.1.1-stable_win32.exe.zip",
+            .hash = "N-V-__8AACApAgexdT-bxc1HIIC4wimW83RKvtUpdLjjfjye",
+            .lazy = true,
+        },
+        .godot_4_1_1_macos_universal = .{
+            .url = "https://github.com/godotengine/godot/releases/download/4.1.1-stable/Godot_v4.1.1-stable_macos.universal.zip",
+            .hash = "N-V-__8AAPrBBA7TBD1w7CGKb7gpvPhkZm83kEAmivkm05E9",
+            .lazy = true,
+        },
+        .godot_4_1_1_linux_x86_64 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/4.1.1-stable/Godot_v4.1.1-stable_linux.x86_64.zip",
+            .hash = "N-V-__8AAAAuLQcOBEPPh1i3sINrlcehXMiOhlGRfJTsqZ3m",
+            .lazy = true,
+        },
+        .godot_4_1_1_linux_x86 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/4.1.1-stable/Godot_v4.1.1-stable_linux.x86_32.zip",
+            .hash = "N-V-__8AAMAOiwbvXfzikSjoGQ1SYCste-Ogm3VG3lfAPZnq",
+            .lazy = true,
+        },
+        .godot_4_0_4_windows_x86_64 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/4.0.4-stable/Godot_v4.0.4-stable_win64.exe.zip",
+            .hash = "N-V-__8AACB58AZmflCaEMoJdITBM8ttKjxNZPGqXa8Rx7_7",
+            .lazy = true,
+        },
+        .godot_4_0_4_windows_x86 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/4.0.4-stable/Godot_v4.0.4-stable_win32.exe.zip",
+            .hash = "N-V-__8AACCPzwaxnGoXQ3PaRbYsPwv58UWVQp9JXCphSATN",
+            .lazy = true,
+        },
+        .godot_4_0_4_macos_universal = .{
+            .url = "https://github.com/godotengine/godot/releases/download/4.0.4-stable/Godot_v4.0.4-stable_macos.universal.zip",
+            .hash = "N-V-__8AAGoHqg2eK8rhAK2vrXpeI9G1hEr6QJe5DFrne7Fk",
+            .lazy = true,
+        },
+        .godot_4_0_4_linux_x86_64 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/4.0.4-stable/Godot_v4.0.4-stable_linux.x86_64.zip",
+            .hash = "N-V-__8AACA8_AY-X2GZNeAu-XWocdUnzdNTuoxXVzaTeZlO",
+            .lazy = true,
+        },
+        .godot_4_0_4_linux_x86 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/4.0.4-stable/Godot_v4.0.4-stable_linux.x86_32.zip",
+            .hash = "N-V-__8AAEAdXAbL0RK8WN_y22k-4mXN7iKmWF_WrxBd9qOc",
+            .lazy = true,
+        },
+        .godot_3_5_3_linux_x86_64 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/3.5.3-stable/Godot_v3.5.3-stable_x11.64.zip",
+            .hash = "N-V-__8AAIjouAQHGo84xo2wFmjrFAe9-hGJ8ZqNbafh6mjq",
+            .lazy = true,
+        },
+        .godot_3_5_3_linux_x86 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/3.5.3-stable/Godot_v3.5.3-stable_x11.32.zip",
+            .hash = "N-V-__8AABCiOASWoDz9mreDZoXxRKnPEIvNbtvm9hcNWwDI",
+            .lazy = true,
+        },
+        .godot_3_5_3_windows_x86_64 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/3.5.3-stable/Godot_v3.5.3-stable_win64.exe.zip",
+            .hash = "N-V-__8AAMQPkQTwuI8FRBzmhdbYOuVGTQVfFexMFYUzYcJN",
+            .lazy = true,
+        },
+        .godot_3_5_3_windows_x86 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/3.5.3-stable/Godot_v3.5.3-stable_win32.exe.zip",
+            .hash = "N-V-__8AANTzSgR_y9gWJKh3ZoSitfTqQUxExpoTnm-ht11s",
+            .lazy = true,
+        },
+        .godot_3_5_3_macos_universal = .{
+            .url = "https://github.com/godotengine/godot/releases/download/3.5.3-stable/Godot_v3.5.3-stable_osx.universal.zip",
+            .hash = "N-V-__8AAL_MZghGMrAPT62xl9EQA0p1--H6QCLivAOWm5K1",
+            .lazy = true,
+        },
+        .godot_4_1_2_windows_x86_64 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/4.1.2-stable/Godot_v4.1.2-stable_win64.exe.zip",
+            .hash = "N-V-__8AACBnLwfVg9zM5YO3Ze_zd4xJYqPpYkg87KH6Mgk5",
+            .lazy = true,
+        },
+        .godot_4_1_2_windows_x86 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/4.1.2-stable/Godot_v4.1.2-stable_win32.exe.zip",
+            .hash = "N-V-__8AACDRDwc8tCwACLGBv5F0ZH7hXoqoNX_y0MCBGB0v",
+            .lazy = true,
+        },
+        .godot_4_1_2_macos_universal = .{
+            .url = "https://github.com/godotengine/godot/releases/download/4.1.2-stable/Godot_v4.1.2-stable_macos.universal.zip",
+            .hash = "N-V-__8AAHoeHw6uaMLfVZqoT00H5xm6LdKcjwOhtIajdAo0",
+            .lazy = true,
+        },
+        .godot_4_1_2_linux_x86_64 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/4.1.2-stable/Godot_v4.1.2-stable_linux.x86_64.zip",
+            .hash = "N-V-__8AAGC-OgdGVc_LaiwTpKRgYDvOso5rKYdtMMV34Nmt",
+            .lazy = true,
+        },
+        .godot_4_1_2_linux_x86 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/4.1.2-stable/Godot_v4.1.2-stable_linux.x86_32.zip",
+            .hash = "N-V-__8AACC_mAZj35YpPoP8svarlMVyWLkjPBSu85S9S-25",
+            .lazy = true,
+        },
+        .godot_4_1_3_windows_x86_64 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/4.1.3-stable/Godot_v4.1.3-stable_win64.exe.zip",
+            .hash = "N-V-__8AACDfLweNu-XSxX4SagysOljjj_oTzoRun38bCnPB",
+            .lazy = true,
+        },
+        .godot_4_1_3_windows_x86 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/4.1.3-stable/Godot_v4.1.3-stable_win32.exe.zip",
+            .hash = "N-V-__8AACAxEAe92CJAHPrrJGT7eJGevfL7_lXvgKtamAWB",
+            .lazy = true,
+        },
+        .godot_4_1_3_macos_universal = .{
+            .url = "https://github.com/godotengine/godot/releases/download/4.1.3-stable/Godot_v4.1.3-stable_macos.universal.zip",
+            .hash = "N-V-__8AAIohIA6Hu-Q70mAyn9I3vx2No7XRK9mMjJk5_dzr",
+            .lazy = true,
+        },
+        .godot_4_1_3_linux_x86_64 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/4.1.3-stable/Godot_v4.1.3-stable_linux.x86_64.zip",
+            .hash = "N-V-__8AAGA-OwcXWthYMxFmAxU2pw_C4m_bXOaFd_k_KmVf",
+            .lazy = true,
+        },
+        .godot_4_1_3_linux_x86 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/4.1.3-stable/Godot_v4.1.3-stable_linux.x86_32.zip",
+            .hash = "N-V-__8AACAfmQajJNJ9cD6YtJv4MPjDRZ8YAPBQDWNZJrsa",
+            .lazy = true,
+        },
+        .godot_4_2_0_windows_x86_64 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/4.2-stable/Godot_v4.2-stable_win64.exe.zip",
+            .hash = "N-V-__8AACA7dQY2vbmdRiQZK5ofvD7NHjhR4sMBSqTjT5bw",
+            .lazy = true,
+        },
+        .godot_4_2_0_windows_x86 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/4.2-stable/Godot_v4.2-stable_win32.exe.zip",
+            .hash = "N-V-__8AACDhJgeLFGnYWX7uZnPcqraoaaGocEQx7k3ILE6r",
+            .lazy = true,
+        },
+        .godot_4_2_0_macos_universal = .{
+            .url = "https://github.com/godotengine/godot/releases/download/4.2-stable/Godot_v4.2-stable_macos.universal.zip",
+            .hash = "N-V-__8AAAbvLw3DuhZYdD0ZIt2Fb59cl546L4CIGlpqLRw9",
+            .lazy = true,
+        },
+        .godot_4_2_0_linux_x86_64 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/4.2-stable/Godot_v4.2-stable_linux.x86_64.zip",
+            .hash = "N-V-__8AANiF9QU7QXwQek6H2XfiAcbfFHfumliOl2d6fo3u",
+            .lazy = true,
+        },
+        .godot_4_2_0_linux_x86 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/4.2-stable/Godot_v4.2-stable_linux.x86_32.zip",
+            .hash = "N-V-__8AAFgkEQbNFqFGvUPU7LpAIRbVNn7sK7xR3MgeL8Ns",
+            .lazy = true,
+        },
+        .godot_4_2_0_linux_aarch64 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/4.2-stable/Godot_v4.2-stable_linux.arm64.zip",
+            .hash = "N-V-__8AACAL4QUG0P_GPcYM254CxPNeSlqi6PkofleljhHM",
+            .lazy = true,
+        },
+        .godot_4_2_0_linux_arm = .{
+            .url = "https://github.com/godotengine/godot/releases/download/4.2-stable/Godot_v4.2-stable_linux.arm32.zip",
+            .hash = "N-V-__8AABAynAVxj92NHbgLPmcoD2LDIQFSsb0kaq6ZFeS-",
+            .lazy = true,
+        },
+        .godot_4_2_1_windows_x86_64 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/4.2.1-stable/Godot_v4.2.1-stable_win64.exe.zip",
+            .hash = "N-V-__8AACD_dQZEqzyvO4kEv1Rgv12z6Hk4Vf3THDBUyXAs",
+            .lazy = true,
+        },
+        .godot_4_2_1_windows_x86 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/4.2.1-stable/Godot_v4.2.1-stable_win32.exe.zip",
+            .hash = "N-V-__8AACChJwea31CwoN4A178N2_UJdk2taqust8XFv3bV",
+            .lazy = true,
+        },
+        .godot_4_2_1_macos_universal = .{
+            .url = "https://github.com/godotengine/godot/releases/download/4.2.1-stable/Godot_v4.2.1-stable_macos.universal.zip",
+            .hash = "N-V-__8AABovMQ0W1aWUCvCCnusNNB_SVG_JeXFKZKtiVAkz",
+            .lazy = true,
+        },
+        .godot_4_2_1_linux_x86_64 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/4.2.1-stable/Godot_v4.2.1-stable_linux.x86_64.zip",
+            .hash = "N-V-__8AANBF9gVxZTcOjHAOJ5jhTZioIL7EaNh1tmx3ZDnb",
+            .lazy = true,
+        },
+        .godot_4_2_1_linux_x86 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/4.2.1-stable/Godot_v4.2.1-stable_linux.x86_32.zip",
+            .hash = "N-V-__8AAHj0EQbbXCmYQGkUArRv94_QMf-_nzSpOaogvVpn",
+            .lazy = true,
+        },
+        .godot_4_2_1_linux_aarch64 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/4.2.1-stable/Godot_v4.2.1-stable_linux.arm64.zip",
+            .hash = "N-V-__8AAEDNiwWqOhd---5RYYfv2lLsgkJ_SsGofVI6Vsgb",
+            .lazy = true,
+        },
+        .godot_4_2_1_linux_arm = .{
+            .url = "https://github.com/godotengine/godot/releases/download/4.2.1-stable/Godot_v4.2.1-stable_linux.arm32.zip",
+            .hash = "N-V-__8AADzkZAXJZh5irka2lbs25N3n2FxN5BDgDlE9WiAH",
+            .lazy = true,
+        },
+        .godot_4_1_4_windows_x86_64 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/4.1.4-stable/Godot_v4.1.4-stable_win64.exe.zip",
+            .hash = "N-V-__8AACAxMQe_1l5sQ45e9BIkQENocHjwqcS_2ElxBxzG",
+            .lazy = true,
+        },
+        .godot_4_1_4_windows_x86 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/4.1.4-stable/Godot_v4.1.4-stable_win32.exe.zip",
+            .hash = "N-V-__8AACAPEQcVIz8Uk_A1w7GFZWWmepE6gbe4ZRBUlBAK",
+            .lazy = true,
+        },
+        .godot_4_1_4_macos_universal = .{
+            .url = "https://github.com/godotengine/godot/releases/download/4.1.4-stable/Godot_v4.1.4-stable_macos.universal.zip",
+            .hash = "N-V-__8AANmlRA7TegRbae8CQzLOL2wzDpmIcA15pKbNXhzZ",
+            .lazy = true,
+        },
+        .godot_4_1_4_linux_x86_64 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/4.1.4-stable/Godot_v4.1.4-stable_linux.x86_64.zip",
+            .hash = "N-V-__8AAODtOwekFgR-6xQcssBtjGWpmgDxmFf11ETUuWt3",
+            .lazy = true,
+        },
+        .godot_4_1_4_linux_x86 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/4.1.4-stable/Godot_v4.1.4-stable_linux.x86_32.zip",
+            .hash = "N-V-__8AAAAPmgbP5O3C8y3czmxQ7l1G_a7bXkCt-wqA4aNr",
+            .lazy = true,
+        },
+        .godot_4_2_2_windows_x86_64 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/4.2.2-stable/Godot_v4.2.2-stable_win64.exe.zip",
+            .hash = "N-V-__8AACAjeQZZok-t0LZ1vpHpusKFMprR4AK6jT4O8GK-",
+            .lazy = true,
+        },
+        .godot_4_2_2_windows_x86 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/4.2.2-stable/Godot_v4.2.2-stable_win32.exe.zip",
+            .hash = "N-V-__8AACBPKwfv_BW0vxym-_jm0nRmXipoE1vaOw99n6wD",
+            .lazy = true,
+        },
+        .godot_4_2_2_macos_universal = .{
+            .url = "https://github.com/godotengine/godot/releases/download/4.2.2-stable/Godot_v4.2.2-stable_macos.universal.zip",
+            .hash = "N-V-__8AAKkcOA2tPc-obyq1qfAUXIxTqNZrLp3KzVrRyHVJ",
+            .lazy = true,
+        },
+        .godot_4_2_2_linux_x86_64 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/4.2.2-stable/Godot_v4.2.2-stable_linux.x86_64.zip",
+            .hash = "N-V-__8AAHB1-QWn8-muitpggJLsNYjOF5xuOlShl46MRa4F",
+            .lazy = true,
+        },
+        .godot_4_2_2_linux_x86 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/4.2.2-stable/Godot_v4.2.2-stable_linux.x86_32.zip",
+            .hash = "N-V-__8AAHhUFQbmzA1CikYlz7BG6zrPnK9Kk8pQBlqRmRmm",
+            .lazy = true,
+        },
+        .godot_4_2_2_linux_aarch64 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/4.2.2-stable/Godot_v4.2.2-stable_linux.arm64.zip",
+            .hash = "N-V-__8AABjNjgVTf5p6ebR6JhMu7z9pVzcQ-qxFrt8X4wFx",
+            .lazy = true,
+        },
+        .godot_4_2_2_linux_arm = .{
+            .url = "https://github.com/godotengine/godot/releases/download/4.2.2-stable/Godot_v4.2.2-stable_linux.arm32.zip",
+            .hash = "N-V-__8AAHxkaAXkDmcGiGHT6PB-9Skq9go6y9dwBQH5I7Uj",
+            .lazy = true,
+        },
+        .godot_4_3_0_windows_aarch64 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/4.3-stable/Godot_v4.3-stable_windows_arm64.exe.zip",
+            .hash = "N-V-__8AAPACbwgX1npqyB8MmEzdkX1mwsa0kg7HR-hetkog",
+            .lazy = true,
+        },
+        .godot_4_3_0_windows_x86_64 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/4.3-stable/Godot_v4.3-stable_win64.exe.zip",
+            .hash = "N-V-__8AAPAy7wc8PEr-xvQEHEetjgC57VjJK8IrCobUCyqz",
+            .lazy = true,
+        },
+        .godot_4_3_0_windows_x86 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/4.3-stable/Godot_v4.3-stable_win32.exe.zip",
+            .hash = "N-V-__8AAPAQ6QgTaxAiL0x9KfHaYwLS-eTKW5DqqoLQTonL",
+            .lazy = true,
+        },
+        .godot_4_3_0_macos_universal = .{
+            .url = "https://github.com/godotengine/godot/releases/download/4.3-stable/Godot_v4.3-stable_macos.universal.zip",
+            .hash = "N-V-__8AACXAyg4PHJeZHyHg55jquYvWHaiFXlHvdPeYq9Jp",
+            .lazy = true,
+        },
+        .godot_4_3_0_linux_x86_64 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/4.3-stable/Godot_v4.3-stable_linux.x86_64.zip",
+            .hash = "N-V-__8AAJApqwbIj4BZDRwdP9UcRkEk9LP0OGs8OnFsT1ZX",
+            .lazy = true,
+        },
+        .godot_4_3_0_linux_x86 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/4.3-stable/Godot_v4.3-stable_linux.x86_32.zip",
+            .hash = "N-V-__8AAFgg5QZNeWj2kiNby11CXAVbymK-6iTgtPO9Sa8K",
+            .lazy = true,
+        },
+        .godot_4_3_0_linux_aarch64 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/4.3-stable/Godot_v4.3-stable_linux.arm64.zip",
+            .hash = "N-V-__8AAHjgLAYKzdwyJox1waygKE8X_Mi6RrQOZymwvSrk",
+            .lazy = true,
+        },
+        .godot_4_3_0_linux_arm = .{
+            .url = "https://github.com/godotengine/godot/releases/download/4.3-stable/Godot_v4.3-stable_linux.arm32.zip",
+            .hash = "N-V-__8AAOhPAAbTkTR6HLm3avdL1DdLTXIN0beEGo_OKG0v",
+            .lazy = true,
+        },
+        .godot_3_6_0_linux_x86_64 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/3.6-stable/Godot_v3.6-stable_x11.64.zip",
+            .hash = "N-V-__8AAICi8wOZOXIBDO327Nr7cCHawRrYR8rV95vTkrgs",
+            .lazy = true,
+        },
+        .godot_3_6_0_linux_x86 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/3.6-stable/Godot_v3.6-stable_x11.32.zip",
+            .hash = "N-V-__8AAOjnngOC4pSkTHcJNjrzNRv_tnKrwRkT_WvzyvCL",
+            .lazy = true,
+        },
+        .godot_3_6_0_windows_x86_64 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/3.6-stable/Godot_v3.6-stable_win64.exe.zip",
+            .hash = "N-V-__8AAKqc8wNZMY3l0qPyUxhBXpcdm_GlHNOVkiAsKAwI",
+            .lazy = true,
+        },
+        .godot_3_6_0_windows_x86 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/3.6-stable/Godot_v3.6-stable_win32.exe.zip",
+            .hash = "N-V-__8AALpA8ANvzSfc81wvR_iKa71DyL0AgQBiLDs-fmaU",
+            .lazy = true,
+        },
+        .godot_3_6_0_macos_universal = .{
+            .url = "https://github.com/godotengine/godot/releases/download/3.6-stable/Godot_v3.6-stable_osx.universal.zip",
+            .hash = "N-V-__8AAMqeCAfipx3NIjWNn2czVhGA9w0ASHBEFpbLzL7G",
+            .lazy = true,
+        },
+        .godot_3_6_0_linux_aarch64 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/3.6-stable/Godot_v3.6-stable_linux.arm64.zip",
+            .hash = "N-V-__8AACAiRgPUZMQKqPY0E_1rakOxLPbYBiEgBJRIqI6p",
+            .lazy = true,
+        },
+        .godot_3_6_0_linux_arm = .{
+            .url = "https://github.com/godotengine/godot/releases/download/3.6-stable/Godot_v3.6-stable_linux.arm32.zip",
+            .hash = "N-V-__8AABieLgPXXT_GQVgUUtXevs1FsSlF4DLiw1R_xysJ",
+            .lazy = true,
+        },
+        .godot_4_4_0_windows_aarch64 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/4.4-stable/Godot_v4.4-stable_windows_arm64.exe.zip",
+            .hash = "N-V-__8AAPBytgo_2tTUOosf7LdFTLLFhYSWjkp1DkEt_0pl",
+            .lazy = true,
+        },
+        .godot_4_4_0_windows_x86_64 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/4.4-stable/Godot_v4.4-stable_win64.exe.zip",
+            .hash = "N-V-__8AAPCeOwlzj1gHm_Tbd9CVWnOaGLo7oSUG2vBXQFA4",
+            .lazy = true,
+        },
+        .godot_4_4_0_windows_x86 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/4.4-stable/Godot_v4.4-stable_win32.exe.zip",
+            .hash = "N-V-__8AAPCYXwo6rAyaqabkniMX9U4Ox1WBqgsXlmUJe93v",
+            .lazy = true,
+        },
+        .godot_4_4_0_macos_universal = .{
+            .url = "https://github.com/godotengine/godot/releases/download/4.4-stable/Godot_v4.4-stable_macos.universal.zip",
+            .hash = "N-V-__8AAPjZwhGKQPFpjxQlcgWTrytm4253WCh_s6rcBcNd",
+            .lazy = true,
+        },
+        .godot_4_4_0_linux_x86_64 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/4.4-stable/Godot_v4.4-stable_linux.x86_64.zip",
+            .hash = "N-V-__8AABD-iwfjh_VDCRj9e4VMOucmrYqbx8goLk3dPJ5q",
+            .lazy = true,
+        },
+        .godot_4_4_0_linux_x86 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/4.4-stable/Godot_v4.4-stable_linux.x86_32.zip",
+            .hash = "N-V-__8AADiz0wfmr8P37uOfEfp1H6UpH6OJaqxEtauVNbq7",
+            .lazy = true,
+        },
+        .godot_4_4_0_linux_aarch64 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/4.4-stable/Godot_v4.4-stable_linux.arm64.zip",
+            .hash = "N-V-__8AANAk-AYLLLlbzVhuZ7HozouzQKw1N5M46E_vnTMm",
+            .lazy = true,
+        },
+        .godot_4_4_0_linux_arm = .{
+            .url = "https://github.com/godotengine/godot/releases/download/4.4-stable/Godot_v4.4-stable_linux.arm32.zip",
+            .hash = "N-V-__8AAMxy6gb5mivTTFfQp75DlCHDK7k8jiIFb-_H8dz9",
+            .lazy = true,
+        },
+        .godot_4_4_1_windows_aarch64 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/4.4.1-stable/Godot_v4.4.1-stable_windows_arm64.exe.zip",
+            .hash = "N-V-__8AAPDczwqg7mcnHWYbp-oo5wR3NR8-INmYVzPTSa_n",
+            .lazy = true,
+        },
+        .godot_4_4_1_windows_x86_64 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/4.4.1-stable/Godot_v4.4.1-stable_win64.exe.zip",
+            .hash = "N-V-__8AAPDAVAn8ET1ygEUCt4ptQp2jWWUPSv5_BKK9IjsO",
+            .lazy = true,
+        },
+        .godot_4_4_1_windows_x86 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/4.4.1-stable/Godot_v4.4.1-stable_win32.exe.zip",
+            .hash = "N-V-__8AAPASeQoCklJNCN9LPPzlbiz7HWS4x6D8dR0j0IA5",
+            .lazy = true,
+        },
+        .godot_4_4_1_macos_universal = .{
+            .url = "https://github.com/godotengine/godot/releases/download/4.4.1-stable/Godot_v4.4.1-stable_macos.universal.zip",
+            .hash = "N-V-__8AAA1S9hE_LTW2SSXKtIrmDLOm9Uol7v9fMy62hjne",
+            .lazy = true,
+        },
+        .godot_4_4_1_linux_x86_64 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/4.4.1-stable/Godot_v4.4.1-stable_linux.x86_64.zip",
+            .hash = "N-V-__8AALCdpQdt414tyYosRGrzA-KMlzRuopKfoQs0IpqK",
+            .lazy = true,
+        },
+        .godot_4_4_1_linux_x86 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/4.4.1-stable/Godot_v4.4.1-stable_linux.x86_32.zip",
+            .hash = "N-V-__8AANiC7Qdu22FYJWlQHkhxC-hYaHQI06-O7Kxxx8nk",
+            .lazy = true,
+        },
+        .godot_4_4_1_linux_aarch64 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/4.4.1-stable/Godot_v4.4.1-stable_linux.arm64.zip",
+            .hash = "N-V-__8AAGikEQeXfgYL5xOxu9U1qtR-nP-tSDCE6L0qxW8d",
+            .lazy = true,
+        },
+        .godot_4_4_1_linux_arm = .{
+            .url = "https://github.com/godotengine/godot/releases/download/4.4.1-stable/Godot_v4.4.1-stable_linux.arm32.zip",
+            .hash = "N-V-__8AAKRyBAd_g4fgoobFOjFvfgm3wcNCykVkUM-KyA3-",
+            .lazy = true,
+        },
+        .godot_3_6_1_linux_x86_64 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/3.6.1-stable/Godot_v3.6.1-stable_x11.64.zip",
+            .hash = "N-V-__8AAIhS8wMwOrBG3odNqogfcuCzuBsUa4teYIjvtZww",
+            .lazy = true,
+        },
+        .godot_3_6_1_linux_x86 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/3.6.1-stable/Godot_v3.6.1-stable_x11.32.zip",
+            .hash = "N-V-__8AAOi3nQMrzfdPST9w-7nhoUxKYyVeaNC6Ds8X6Uco",
+            .lazy = true,
+        },
+        .godot_3_6_1_windows_x86_64 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/3.6.1-stable/Godot_v3.6.1-stable_win64.exe.zip",
+            .hash = "N-V-__8AADz-8QOOHM15bK4fkHtZ-FPa3BL9On8ghPp8ogGu",
+            .lazy = true,
+        },
+        .godot_3_6_1_windows_x86 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/3.6.1-stable/Godot_v3.6.1-stable_win32.exe.zip",
+            .hash = "N-V-__8AAExC7wNTG43F9sUaqED9-K1tz7zlJnf5ydU9gCiE",
+            .lazy = true,
+        },
+        .godot_3_6_1_macos_universal = .{
+            .url = "https://github.com/godotengine/godot/releases/download/3.6.1-stable/Godot_v3.6.1-stable_osx.universal.zip",
+            .hash = "N-V-__8AAD-gCAdV2kJ3I8YuorcdJIDmRXp8Nx8Ig0lsdBMx",
+            .lazy = true,
+        },
+        .godot_3_6_1_linux_aarch64 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/3.6.1-stable/Godot_v3.6.1-stable_linux.arm64.zip",
+            .hash = "N-V-__8AAECiRAMp9D6pLxKqpXQ-VnjdwwiSudRAHbQ81N3B",
+            .lazy = true,
+        },
+        .godot_3_6_1_linux_arm = .{
+            .url = "https://github.com/godotengine/godot/releases/download/3.6.1-stable/Godot_v3.6.1-stable_linux.arm32.zip",
+            .hash = "N-V-__8AAAxeKwPVH1DYzWefJQyQKukqPpK3OT7ogDRNMXer",
+            .lazy = true,
+        },
+        .godot_4_5_0_windows_aarch64 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/4.5-stable/Godot_v4.5-stable_windows_arm64.exe.zip",
+            .hash = "N-V-__8AABDMMgpjP0ljPaJOuVUFw3_zdWt_9XT4k1EpGwcA",
+            .lazy = true,
+        },
+        .godot_4_5_0_windows_x86_64 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/4.5-stable/Godot_v4.5-stable_win64.exe.zip",
+            .hash = "N-V-__8AABCItwnuhUglcqDgrrqQnvCxON1lQekHoBnmcOgF",
+            .lazy = true,
+        },
+        .godot_4_5_0_windows_x86 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/4.5-stable/Godot_v4.5-stable_win32.exe.zip",
+            .hash = "N-V-__8AABCsowpY763wvg31j9CTQbQBpn499SNoceRchnk7",
+            .lazy = true,
+        },
+        .godot_4_5_0_macos_universal = .{
+            .url = "https://github.com/godotengine/godot/releases/download/4.5-stable/Godot_v4.5-stable_macos.universal.zip",
+            .hash = "N-V-__8AAKuSjxW1AjzKCrWBitURvAeYjCjMREVTzOik2iOX",
+            .lazy = true,
+        },
+        .godot_4_5_0_linux_x86_64 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/4.5-stable/Godot_v4.5-stable_linux.x86_64.zip",
+            .hash = "N-V-__8AAJAwGQidBi8D0VO_SKSfvkUfoorO_b7gvwEjzfme",
+            .lazy = true,
+        },
+        .godot_4_5_0_linux_x86 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/4.5-stable/Godot_v4.5-stable_linux.x86_32.zip",
+            .hash = "N-V-__8AAKw1MgiLOAxNMGsYKbCwScCkG-5KyWzfDmU0pgzx",
+            .lazy = true,
+        },
+        .godot_4_5_0_linux_aarch64 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/4.5-stable/Godot_v4.5-stable_linux.arm64.zip",
+            .hash = "N-V-__8AAMiohgechdChimbLKXjAO2KKAOQayuRvW7Stp-eu",
+            .lazy = true,
+        },
+        .godot_4_5_0_linux_arm = .{
+            .url = "https://github.com/godotengine/godot/releases/download/4.5-stable/Godot_v4.5-stable_linux.arm32.zip",
+            .hash = "N-V-__8AANC0ewd8Pvu83dcuxxv-n5W28x6wRIbzKGwAEroe",
+            .lazy = true,
+        },
+        .godot_4_5_1_windows_aarch64 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/4.5.1-stable/Godot_v4.5.1-stable_windows_arm64.exe.zip",
+            .hash = "N-V-__8AABDkOApLLuvBK2TgPMeHrI8XarUWYmJEeFM6Qn1f",
+            .lazy = true,
+        },
+        .godot_4_5_1_windows_x86_64 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/4.5.1-stable/Godot_v4.5.1-stable_win64.exe.zip",
+            .hash = "N-V-__8AABCqvwlGTrbFR-2cFjOw-t3BZhkEWdhXLFpzUsVj",
+            .lazy = true,
+        },
+        .godot_4_5_1_windows_x86 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/4.5.1-stable/Godot_v4.5.1-stable_win32.exe.zip",
+            .hash = "N-V-__8AABDAqwowhcgvJaWu0zQ4YVh0n1Y5lbfwEjN9n097",
+            .lazy = true,
+        },
+        .godot_4_5_1_macos_universal = .{
+            .url = "https://github.com/godotengine/godot/releases/download/4.5.1-stable/Godot_v4.5.1-stable_macos.universal.zip",
+            .hash = "N-V-__8AAL_dmhU4u2TS8auojIcT5zz5y53iR_eJ3BK-l8If",
+            .lazy = true,
+        },
+        .godot_4_5_1_linux_x86_64 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/4.5.1-stable/Godot_v4.5.1-stable_linux.x86_64.zip",
+            .hash = "N-V-__8AAJCAIAj_tW3IOVQb8wlB8rS4M0q43frPkpne9R4k",
+            .lazy = true,
+        },
+        .godot_4_5_1_linux_x86 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/4.5.1-stable/Godot_v4.5.1-stable_linux.x86_32.zip",
+            .hash = "N-V-__8AAIwFOgi5dvULxcDKBcrXn0pyNHlrnP-Z7hF1B4Pe",
+            .lazy = true,
+        },
+        .godot_4_5_1_linux_aarch64 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/4.5.1-stable/Godot_v4.5.1-stable_linux.arm64.zip",
+            .hash = "N-V-__8AALhojgewyy4ul1KNHmASwaNmJQsazWnnkujGTbMc",
+            .lazy = true,
+        },
+        .godot_4_5_1_linux_arm = .{
+            .url = "https://github.com/godotengine/godot/releases/download/4.5.1-stable/Godot_v4.5.1-stable_linux.arm32.zip",
+            .hash = "N-V-__8AANhUgweEB49cLkMuywOKNLZD017oT5UknSrhWE0P",
+            .lazy = true,
+        },
+        .godot_3_6_2_linux_x86_64 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/3.6.2-stable/Godot_v3.6.2-stable_x11.64.zip",
+            .hash = "N-V-__8AAIiy9QO5BaGiySC-QVCZMnHHurY4WjCT50B0K_aP",
+            .lazy = true,
+        },
+        .godot_3_6_2_linux_x86 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/3.6.2-stable/Godot_v3.6.2-stable_x11.32.zip",
+            .hash = "N-V-__8AAOiXoAMuGKmxawm21-m5gOvmtD3h4hAxtUE9iXbz",
+            .lazy = true,
+        },
+        .godot_3_6_2_windows_x86_64 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/3.6.2-stable/Godot_v3.6.2-stable_win64.exe.zip",
+            .hash = "N-V-__8AADws9ANyAIloD9nQLvQLh4zV2-M8b8RGrydko_Su",
+            .lazy = true,
+        },
+        .godot_3_6_2_windows_x86 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/3.6.2-stable/Godot_v3.6.2-stable_win32.exe.zip",
+            .hash = "N-V-__8AAEzs8QPWs8OBGAteu--57Ud6WEZZn7DWdVvqYYPu",
+            .lazy = true,
+        },
+        .godot_3_6_2_macos_universal = .{
+            .url = "https://github.com/godotengine/godot/releases/download/3.6.2-stable/Godot_v3.6.2-stable_osx.universal.zip",
+            .hash = "N-V-__8AAM__BgduzXArDLwm8jLY_khjGu-mEKd5cobjPJkc",
+            .lazy = true,
+        },
+        .godot_3_6_2_linux_aarch64 = .{
+            .url = "https://github.com/godotengine/godot/releases/download/3.6.2-stable/Godot_v3.6.2-stable_linux.arm64.zip",
+            .hash = "N-V-__8AAGDiRgOrXY1UJUmWSudjDbINgMaATc8MfSED6MJd",
+            .lazy = true,
+        },
+    },
+}
