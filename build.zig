@@ -1,6 +1,9 @@
 const std = @import("std");
+const root = @import("root");
 
 pub fn build(b: *std.Build) void {
+    if (@hasDecl(root, "root") and root.root.build != build) return;
+
     const target = b.standardTargetOptions(.{});
     const version = b.option([]const u8, "version", "Godot version constraint (default: latest)") orelse "latest";
 
@@ -245,7 +248,7 @@ fn findMatchingHeadersVersion(
     return best_version orelse @panic("No Godot version found matching constraint");
 }
 
-fn getSelfDependency(b: *std.Build, constraint_str: []const u8) *std.Build.Dependency {
+fn getSelfDependency(b: *std.Build) *std.Build.Dependency {
     const build_runner = @import("root");
     const deps = build_runner.dependencies;
     const build_zig = @This();
@@ -258,7 +261,7 @@ fn getSelfDependency(b: *std.Build, constraint_str: []const u8) *std.Build.Depen
             // We're a dependency - find our name from available_deps
             for (b.available_deps) |dep| {
                 if (std.mem.eql(u8, dep[1], pkg_hash)) {
-                    return b.dependency(dep[0], .{ .version = constraint_str });
+                    return b.dependency(dep[0], .{});
                 }
             }
         }
@@ -307,13 +310,13 @@ pub fn headers(
     const constraint = Constraint.parse(constraint_str) orelse
         @panic("Invalid version constraint");
 
-    const godot_builder = getGodotBuilder(b, constraint_str);
+    const godot_builder = getGodotBuilder(b);
     const version = findMatchingHeadersVersion(godot_builder.available_deps, constraint);
     const sub_path = b.fmt("vendor/godot_{d}_{d}_{d}", .{ version.major, version.minor, version.patch });
 
     return .{
         .dependency = .{
-            .dependency = getSelfDependency(b, constraint_str),
+            .dependency = getSelfDependency(b),
             .sub_path = sub_path,
         },
     };
@@ -337,12 +340,12 @@ pub fn dependency(
     const arch_str = archToString(plat.arch);
 
     // Get the godot package's builder - either ourselves (if root) or via dependencyFromBuildZig
-    const godot_builder = getGodotBuilder(b, constraint_str);
+    const godot_builder = getGodotBuilder(b);
     const name = findMatchingDependency(godot_builder.available_deps, constraint, platform_str, arch_str);
     return godot_builder.lazyDependency(name, .{});
 }
 
-fn getGodotBuilder(b: *std.Build, constraint_str: []const u8) *std.Build {
+fn getGodotBuilder(b: *std.Build) *std.Build {
     const build_runner = @import("root");
     const deps = build_runner.dependencies;
     const build_zig = @This();
@@ -355,8 +358,7 @@ fn getGodotBuilder(b: *std.Build, constraint_str: []const u8) *std.Build {
             // We're a dependency - find our name from available_deps and use dependency()
             for (b.available_deps) |dep| {
                 if (std.mem.eql(u8, dep[1], pkg_hash)) {
-                    // Pass the version constraint to avoid triggering default "latest" resolution
-                    return b.dependency(dep[0], .{ .version = constraint_str }).builder;
+                    return b.dependency(dep[0], .{}).builder;
                 }
             }
         }
