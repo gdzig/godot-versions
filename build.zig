@@ -2,7 +2,7 @@ const std = @import("std");
 const root = @import("root");
 
 pub fn build(b: *std.Build) void {
-    if (@hasDecl(root, "root") and root.root.build != build) return;
+    if (@hasDecl(root, "root") and root.root != @This()) return;
 
     const target = b.standardTargetOptions(.{});
     const version = b.option([]const u8, "version", "Godot version constraint (default: latest)") orelse "latest";
