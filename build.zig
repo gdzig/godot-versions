@@ -113,45 +113,50 @@ pub const Version = struct {
 };
 
 /// Prerelease filter for constraints
+/// Filter for which prerelease levels to include.
 pub const PrereleaseFilter = union(enum) {
-    /// Only match stable releases (default)
-    stable_only,
-    /// Match a specific prerelease type (e.g., -beta matches any beta, -rc matches any rc)
-    prerelease_type: enum { dev, beta, rc },
+    /// Include dev, beta, rc, and stable (everything)
+    dev,
+    /// Include beta, rc, and stable
+    beta,
+    /// Include rc and stable
+    rc,
+    /// Only stable releases (default)
+    stable,
     /// Match an exact prerelease (e.g., -beta2, -rc1)
-    exact_prerelease: Prerelease,
+    exact: Prerelease,
 };
 
 pub const Constraint = union(enum) {
-    /// Exact version match (e.g., "4.5.1" or "4.5.1-beta2")
-    exact: struct { major: u8, minor: u8, patch: u8, prerelease_filter: PrereleaseFilter },
-    /// ~1.2 matches 1.2.x (any patch), stable only by default
-    tilde: struct { major: u8, minor: u8, prerelease_filter: PrereleaseFilter },
-    /// ^1 matches 1.x.x (any minor/patch, same major), stable only by default
-    caret: struct { major: u8, prerelease_filter: PrereleaseFilter },
-    /// >=1.2.3, stable only by default
-    gte: struct { major: u8, minor: u8, patch: u8, prerelease_filter: PrereleaseFilter },
+    /// Version match: "4" (any 4.x.x), "4.5" (any 4.5.x), "4.5.1" (exact)
+    version: struct { major: u8, minor: ?u8, patch: ?u8, prerelease_filter: PrereleaseFilter },
     /// Latest available (stable only by default)
     latest: PrereleaseFilter,
 
-    /// Parse a prerelease filter from a string like "stable", "beta", "beta2", "rc", "rc1", "dev", "dev3"
+    /// Parse a prerelease filter from a string like "stable", "beta", "rc", "dev", "beta2", "rc1"
     fn parsePrereleaseFilter(str: []const u8) ?PrereleaseFilter {
-        if (std.mem.eql(u8, str, "stable")) return .stable_only;
-        if (std.mem.eql(u8, str, "dev")) return .{ .prerelease_type = .dev };
-        if (std.mem.eql(u8, str, "beta")) return .{ .prerelease_type = .beta };
-        if (std.mem.eql(u8, str, "rc")) return .{ .prerelease_type = .rc };
+        if (std.mem.eql(u8, str, "stable")) return .stable;
+        if (std.mem.eql(u8, str, "rc")) return .rc;
+        if (std.mem.eql(u8, str, "beta")) return .beta;
+        if (std.mem.eql(u8, str, "dev")) return .dev;
         // Try parsing as exact prerelease (e.g., "beta2", "rc1", "dev3")
         if (Prerelease.parse(str)) |pre| {
-            return .{ .exact_prerelease = pre };
+            return .{ .exact = pre };
         }
         return null;
     }
 
     pub fn parse(str: []const u8) ?Constraint {
-        if (std.mem.eql(u8, str, "latest")) return .{ .latest = .stable_only };
+        if (std.mem.eql(u8, str, "latest")) return .{ .latest = .stable };
 
-        // Check for prerelease suffix (e.g., "-beta", "-rc1", "-stable")
-        var prerelease_filter: PrereleaseFilter = .stable_only;
+        // Bare prerelease names are shortcuts for latest-<name>
+        if (std.mem.eql(u8, str, "dev")) return .{ .latest = .dev };
+        if (std.mem.eql(u8, str, "beta")) return .{ .latest = .beta };
+        if (std.mem.eql(u8, str, "rc")) return .{ .latest = .rc };
+        if (std.mem.eql(u8, str, "stable")) return .{ .latest = .stable };
+
+        // Check for prerelease suffix (e.g., "-beta", "-rc", "-stable")
+        var prerelease_filter: PrereleaseFilter = .stable;
         var version_part = str;
         if (std.mem.lastIndexOfScalar(u8, str, '-')) |dash_idx| {
             const suffix = str[dash_idx + 1 ..];
@@ -163,76 +168,43 @@ pub const Constraint = union(enum) {
 
         if (std.mem.eql(u8, version_part, "latest")) return .{ .latest = prerelease_filter };
 
-        if (version_part.len > 0 and version_part[0] == '~') {
-            var it = std.mem.splitScalar(u8, version_part[1..], '.');
-            const major = std.fmt.parseInt(u8, it.next() orelse return null, 10) catch return null;
-            const minor = std.fmt.parseInt(u8, it.next() orelse return null, 10) catch return null;
-            return .{ .tilde = .{ .major = major, .minor = minor, .prerelease_filter = prerelease_filter } };
-        }
-
-        if (version_part.len > 0 and version_part[0] == '^') {
-            const major = std.fmt.parseInt(u8, version_part[1..], 10) catch return null;
-            return .{ .caret = .{ .major = major, .prerelease_filter = prerelease_filter } };
-        }
-
-        if (version_part.len >= 2 and version_part[0] == '>' and version_part[1] == '=') {
-            var it = std.mem.splitScalar(u8, version_part[2..], '.');
-            const major = std.fmt.parseInt(u8, it.next() orelse return null, 10) catch return null;
-            const minor = std.fmt.parseInt(u8, it.next() orelse return null, 10) catch return null;
-            const patch = std.fmt.parseInt(u8, it.next() orelse "0", 10) catch return null;
-            return .{ .gte = .{ .major = major, .minor = minor, .patch = patch, .prerelease_filter = prerelease_filter } };
-        }
-
-        // Version: "4" means ^4 (any 4.x.x), "4.2" means ~4.2 (any 4.2.x), "4.2.1" means exact
+        // Parse version: "4", "4.5", or "4.5.1"
         var it = std.mem.splitScalar(u8, version_part, '.');
         const major = std.fmt.parseInt(u8, it.next() orelse return null, 10) catch return null;
-        const minor_str = it.next();
-        if (minor_str == null) {
-            // No minor specified (e.g., "4") - treat as caret (any 4.x.x)
-            return .{ .caret = .{ .major = major, .prerelease_filter = prerelease_filter } };
-        }
-        const minor = std.fmt.parseInt(u8, minor_str.?, 10) catch return null;
-        const patch_str = it.next();
-        if (patch_str == null) {
-            // No patch specified (e.g., "4.2") - treat as tilde (any 4.2.x)
-            return .{ .tilde = .{ .major = major, .minor = minor, .prerelease_filter = prerelease_filter } };
-        }
-        const patch = std.fmt.parseInt(u8, patch_str.?, 10) catch return null;
-        return .{ .exact = .{ .major = major, .minor = minor, .patch = patch, .prerelease_filter = prerelease_filter } };
+        const minor: ?u8 = if (it.next()) |s| std.fmt.parseInt(u8, s, 10) catch return null else null;
+        const patch: ?u8 = if (it.next()) |s| std.fmt.parseInt(u8, s, 10) catch return null else null;
+        return .{ .version = .{ .major = major, .minor = minor, .patch = patch, .prerelease_filter = prerelease_filter } };
     }
 
     fn matchesPrerelease(filter: PrereleaseFilter, prerelease: Prerelease) bool {
-        return switch (filter) {
-            .stable_only => prerelease.isStable(),
-            .prerelease_type => |pt| switch (pt) {
-                .dev => switch (prerelease) {
-                    .dev => true,
-                    else => false,
-                },
-                .beta => switch (prerelease) {
-                    .beta => true,
-                    else => false,
-                },
-                .rc => switch (prerelease) {
-                    .rc => true,
-                    else => false,
-                },
+        switch (filter) {
+            .exact => |exact| return std.meta.eql(prerelease, exact),
+            else => {
+                // Each filter level includes all more stable levels:
+                // dev includes: dev, beta, rc, stable
+                // beta includes: beta, rc, stable
+                // rc includes: rc, stable
+                // stable includes: stable only
+                const prerelease_level = prerelease.typeOrder();
+                const filter_level: u8 = switch (filter) {
+                    .dev => 0,
+                    .beta => 1,
+                    .rc => 2,
+                    .stable => 3,
+                    .exact => unreachable,
+                };
+                return prerelease_level >= filter_level;
             },
-            .exact_prerelease => |exact| std.meta.eql(prerelease, exact),
-        };
+        }
     }
 
     pub fn matches(self: Constraint, version: Version) bool {
         const version_matches = switch (self) {
-            .exact => |e| version.major == e.major and version.minor == e.minor and version.patch == e.patch,
-            .tilde => |t| version.major == t.major and version.minor == t.minor,
-            .caret => |c| version.major == c.major,
-            .gte => |g| blk: {
-                const base = Version{ .major = g.major, .minor = g.minor, .patch = g.patch, .prerelease = .stable };
-                // For gte, we compare base versions (ignoring prerelease for the >= check)
-                if (version.major != base.major) break :blk version.major > base.major;
-                if (version.minor != base.minor) break :blk version.minor > base.minor;
-                break :blk version.patch >= base.patch;
+            .version => |v| blk: {
+                if (version.major != v.major) break :blk false;
+                if (v.minor) |m| if (version.minor != m) break :blk false;
+                if (v.patch) |p| if (version.patch != p) break :blk false;
+                break :blk true;
             },
             .latest => true,
         };
@@ -241,10 +213,7 @@ pub const Constraint = union(enum) {
 
         // Check prerelease filter
         const filter = switch (self) {
-            .exact => |e| e.prerelease_filter,
-            .tilde => |t| t.prerelease_filter,
-            .caret => |c| c.prerelease_filter,
-            .gte => |g| g.prerelease_filter,
+            .version => |v| v.prerelease_filter,
             .latest => |f| f,
         };
 
@@ -420,24 +389,23 @@ fn getSelfDependency(b: *std.Build) *std.Build.Dependency {
 ///
 /// Constraint syntax (stable releases only by default):
 ///   - "4.5.1"       - exact stable version
-///   - "~4.5"        - any 4.5.x stable patch version (highest patch)
-///   - "^4"          - any 4.x.x stable version (highest minor/patch)
-///   - ">=4.0.0"     - stable version 4.0.0 or higher (highest available)
-///   - "latest"      - latest available stable version
+///   - "4.5"         - any 4.5.x stable (highest patch)
+///   - "4"           - any 4.x.x stable (highest minor/patch)
+///   - "latest"      - latest stable version
 ///
-/// Prerelease syntax (append -dev, -beta, -rc, or specific like -beta2):
-///   - "4.6-beta"    - latest 4.6.x beta
+/// Prerelease syntax (append -dev, -beta, -rc, or exact like -beta2):
+///   - "4.6-beta"    - any 4.6.x at beta level or above (beta, rc, stable)
+///   - "4.6-dev"     - any 4.6.x at dev level or above (everything)
 ///   - "4.6.0-beta2" - exact beta2 for 4.6.0
-///   - "~4.6-rc"     - latest rc in 4.6.x range
-///   - "latest-dev"  - latest dev build overall
-///   - "^4-beta"     - latest beta in 4.x.x range
+///   - "dev"         - latest version including all prereleases
+///   - "beta"        - latest version at beta level or above
 ///
 /// Returns null only while waiting for the lazy dependency to be fetched.
 /// Panics if no matching version exists or the platform is unsupported.
 ///
 /// Example:
 ///   const godot = @import("godot");
-///   if (godot.executable(b, target, "~4.5")) |exe_path| {
+///   if (godot.executable(b, target, "4.5")) |exe_path| {
 ///       // exe_path is a LazyPath to the Godot executable
 ///   }
 pub fn executable(
@@ -807,79 +775,69 @@ test "Version.order different base version" {
 // Constraint Parse Tests
 // ============================================================================
 
-test "Constraint.parse exact stable" {
+test "Constraint.parse exact version" {
     const c = Constraint.parse("4.5.1").?;
-    try std.testing.expectEqual(@as(u8, 4), c.exact.major);
-    try std.testing.expectEqual(@as(u8, 5), c.exact.minor);
-    try std.testing.expectEqual(@as(u8, 1), c.exact.patch);
-    try std.testing.expectEqual(PrereleaseFilter.stable_only, c.exact.prerelease_filter);
+    try std.testing.expectEqual(@as(u8, 4), c.version.major);
+    try std.testing.expectEqual(@as(?u8, 5), c.version.minor);
+    try std.testing.expectEqual(@as(?u8, 1), c.version.patch);
+    try std.testing.expectEqual(PrereleaseFilter.stable, c.version.prerelease_filter);
 }
 
 test "Constraint.parse exact with prerelease" {
     const c = Constraint.parse("4.5.1-beta2").?;
-    try std.testing.expectEqual(@as(u8, 4), c.exact.major);
-    try std.testing.expectEqual(@as(u8, 5), c.exact.minor);
-    try std.testing.expectEqual(@as(u8, 1), c.exact.patch);
-    try std.testing.expectEqual(Prerelease{ .beta = 2 }, c.exact.prerelease_filter.exact_prerelease);
+    try std.testing.expectEqual(@as(u8, 4), c.version.major);
+    try std.testing.expectEqual(@as(?u8, 5), c.version.minor);
+    try std.testing.expectEqual(@as(?u8, 1), c.version.patch);
+    try std.testing.expectEqual(Prerelease{ .beta = 2 }, c.version.prerelease_filter.exact);
 }
 
-test "Constraint.parse tilde with prerelease type" {
-    const c = Constraint.parse("~4.5-beta").?;
-    try std.testing.expectEqual(@as(u8, 4), c.tilde.major);
-    try std.testing.expectEqual(@as(u8, 5), c.tilde.minor);
-    try std.testing.expectEqual(PrereleaseFilter{ .prerelease_type = .beta }, c.tilde.prerelease_filter);
+test "Constraint.parse exact with prerelease level" {
+    const c = Constraint.parse("4.5.1-beta").?;
+    try std.testing.expectEqual(@as(u8, 4), c.version.major);
+    try std.testing.expectEqual(@as(?u8, 5), c.version.minor);
+    try std.testing.expectEqual(@as(?u8, 1), c.version.patch);
+    try std.testing.expect(c.version.prerelease_filter == .beta);
 }
 
-test "Constraint.parse implicit tilde" {
-    // "4.5" without patch becomes ~4.5 (any 4.5.x), stable only
+test "Constraint.parse minor with prerelease" {
+    const c = Constraint.parse("4.5-beta").?;
+    try std.testing.expectEqual(@as(u8, 4), c.version.major);
+    try std.testing.expectEqual(@as(?u8, 5), c.version.minor);
+    try std.testing.expectEqual(@as(?u8, null), c.version.patch);
+    try std.testing.expectEqual(PrereleaseFilter.beta, c.version.prerelease_filter);
+}
+
+test "Constraint.parse minor version" {
     const c = Constraint.parse("4.5").?;
-    try std.testing.expectEqual(@as(u8, 4), c.tilde.major);
-    try std.testing.expectEqual(@as(u8, 5), c.tilde.minor);
-    try std.testing.expectEqual(PrereleaseFilter.stable_only, c.tilde.prerelease_filter);
+    try std.testing.expectEqual(@as(u8, 4), c.version.major);
+    try std.testing.expectEqual(@as(?u8, 5), c.version.minor);
+    try std.testing.expectEqual(@as(?u8, null), c.version.patch);
+    try std.testing.expectEqual(PrereleaseFilter.stable, c.version.prerelease_filter);
 }
 
-test "Constraint.parse implicit caret" {
-    // "4" without minor becomes ^4 (any 4.x.x), stable only
+test "Constraint.parse major version" {
     const c = Constraint.parse("4").?;
-    try std.testing.expectEqual(@as(u8, 4), c.caret.major);
-    try std.testing.expectEqual(PrereleaseFilter.stable_only, c.caret.prerelease_filter);
-}
-
-test "Constraint.parse tilde" {
-    const c = Constraint.parse("~4.5").?;
-    try std.testing.expectEqual(@as(u8, 4), c.tilde.major);
-    try std.testing.expectEqual(@as(u8, 5), c.tilde.minor);
-    try std.testing.expectEqual(PrereleaseFilter.stable_only, c.tilde.prerelease_filter);
-}
-
-test "Constraint.parse caret" {
-    const c = Constraint.parse("^4").?;
-    try std.testing.expectEqual(@as(u8, 4), c.caret.major);
-    try std.testing.expectEqual(PrereleaseFilter.stable_only, c.caret.prerelease_filter);
-}
-
-test "Constraint.parse gte" {
-    const c = Constraint.parse(">=4.0.0").?;
-    try std.testing.expectEqual(@as(u8, 4), c.gte.major);
-    try std.testing.expectEqual(@as(u8, 0), c.gte.minor);
-    try std.testing.expectEqual(@as(u8, 0), c.gte.patch);
-    try std.testing.expectEqual(PrereleaseFilter.stable_only, c.gte.prerelease_filter);
-}
-
-test "Constraint.parse gte with prerelease" {
-    const c = Constraint.parse(">=4.0.0-rc").?;
-    try std.testing.expectEqual(@as(u8, 4), c.gte.major);
-    try std.testing.expectEqual(PrereleaseFilter{ .prerelease_type = .rc }, c.gte.prerelease_filter);
+    try std.testing.expectEqual(@as(u8, 4), c.version.major);
+    try std.testing.expectEqual(@as(?u8, null), c.version.minor);
+    try std.testing.expectEqual(@as(?u8, null), c.version.patch);
+    try std.testing.expectEqual(PrereleaseFilter.stable, c.version.prerelease_filter);
 }
 
 test "Constraint.parse latest" {
     const c = Constraint.parse("latest").?;
-    try std.testing.expectEqual(PrereleaseFilter.stable_only, c.latest);
+    try std.testing.expectEqual(PrereleaseFilter.stable, c.latest);
 }
 
 test "Constraint.parse latest with prerelease" {
     const c = Constraint.parse("latest-beta").?;
-    try std.testing.expectEqual(PrereleaseFilter{ .prerelease_type = .beta }, c.latest);
+    try std.testing.expectEqual(PrereleaseFilter.beta, c.latest);
+}
+
+test "Constraint.parse shorthand dev/beta/rc" {
+    try std.testing.expectEqual(PrereleaseFilter.dev, Constraint.parse("dev").?.latest);
+    try std.testing.expectEqual(PrereleaseFilter.beta, Constraint.parse("beta").?.latest);
+    try std.testing.expectEqual(PrereleaseFilter.rc, Constraint.parse("rc").?.latest);
+    try std.testing.expectEqual(PrereleaseFilter.stable, Constraint.parse("stable").?.latest);
 }
 
 // ============================================================================
@@ -905,8 +863,8 @@ test "Constraint.matches exact prerelease" {
     try std.testing.expect(!c.matches(.{ .major = 4, .minor = 5, .patch = 1, .prerelease = .stable }));
 }
 
-test "Constraint.matches tilde stable only" {
-    const c = Constraint.parse("~4.5").?;
+test "Constraint.matches minor stable only" {
+    const c = Constraint.parse("4.5").?;
     // Matches any 4.5.x stable
     try std.testing.expect(c.matches(.{ .major = 4, .minor = 5, .patch = 0, .prerelease = .stable }));
     try std.testing.expect(c.matches(.{ .major = 4, .minor = 5, .patch = 1, .prerelease = .stable }));
@@ -918,18 +876,19 @@ test "Constraint.matches tilde stable only" {
     try std.testing.expect(!c.matches(.{ .major = 3, .minor = 5, .patch = 0, .prerelease = .stable }));
 }
 
-test "Constraint.matches tilde with prerelease type" {
-    const c = Constraint.parse("~4.5-beta").?;
-    // Matches any 4.5.x beta
+test "Constraint.matches minor with prerelease level" {
+    const c = Constraint.parse("4.5-beta").?;
+    // -beta matches beta, rc, and stable (beta and above)
     try std.testing.expect(c.matches(.{ .major = 4, .minor = 5, .patch = 0, .prerelease = .{ .beta = 1 } }));
     try std.testing.expect(c.matches(.{ .major = 4, .minor = 5, .patch = 1, .prerelease = .{ .beta = 5 } }));
-    // Does NOT match stable or other prerelease types
-    try std.testing.expect(!c.matches(.{ .major = 4, .minor = 5, .patch = 0, .prerelease = .stable }));
-    try std.testing.expect(!c.matches(.{ .major = 4, .minor = 5, .patch = 0, .prerelease = .{ .rc = 1 } }));
+    try std.testing.expect(c.matches(.{ .major = 4, .minor = 5, .patch = 0, .prerelease = .{ .rc = 1 } }));
+    try std.testing.expect(c.matches(.{ .major = 4, .minor = 5, .patch = 0, .prerelease = .stable }));
+    // Does NOT match dev (less stable than beta)
+    try std.testing.expect(!c.matches(.{ .major = 4, .minor = 5, .patch = 0, .prerelease = .{ .dev = 1 } }));
 }
 
-test "Constraint.matches caret stable only" {
-    const c = Constraint.parse("^4").?;
+test "Constraint.matches major stable only" {
+    const c = Constraint.parse("4").?;
     // Matches any 4.x.x stable
     try std.testing.expect(c.matches(.{ .major = 4, .minor = 0, .patch = 0, .prerelease = .stable }));
     try std.testing.expect(c.matches(.{ .major = 4, .minor = 5, .patch = 1, .prerelease = .stable }));
@@ -939,18 +898,6 @@ test "Constraint.matches caret stable only" {
     // Does NOT match different major
     try std.testing.expect(!c.matches(.{ .major = 3, .minor = 0, .patch = 0, .prerelease = .stable }));
     try std.testing.expect(!c.matches(.{ .major = 5, .minor = 0, .patch = 0, .prerelease = .stable }));
-}
-
-test "Constraint.matches gte stable only" {
-    const c = Constraint.parse(">=4.0.0").?;
-    // Matches 4.0.0 and above stable
-    try std.testing.expect(c.matches(.{ .major = 4, .minor = 0, .patch = 0, .prerelease = .stable }));
-    try std.testing.expect(c.matches(.{ .major = 4, .minor = 5, .patch = 1, .prerelease = .stable }));
-    try std.testing.expect(c.matches(.{ .major = 5, .minor = 0, .patch = 0, .prerelease = .stable }));
-    // Does NOT match prereleases
-    try std.testing.expect(!c.matches(.{ .major = 4, .minor = 5, .patch = 0, .prerelease = .{ .beta = 1 } }));
-    // Does NOT match below threshold
-    try std.testing.expect(!c.matches(.{ .major = 3, .minor = 9, .patch = 9, .prerelease = .stable }));
 }
 
 test "Constraint.matches latest stable only" {
@@ -963,13 +910,13 @@ test "Constraint.matches latest stable only" {
 }
 
 test "Constraint.matches latest with prerelease" {
-    const c = Constraint.parse("latest-dev").?;
-    // Matches any dev version
+    const c = Constraint.parse("dev").?;
+    // -dev matches everything (dev and above = all)
     try std.testing.expect(c.matches(.{ .major = 4, .minor = 6, .patch = 0, .prerelease = .{ .dev = 1 } }));
     try std.testing.expect(c.matches(.{ .major = 4, .minor = 6, .patch = 0, .prerelease = .{ .dev = 99 } }));
-    // Does NOT match stable or other types
-    try std.testing.expect(!c.matches(.{ .major = 4, .minor = 5, .patch = 0, .prerelease = .stable }));
-    try std.testing.expect(!c.matches(.{ .major = 4, .minor = 5, .patch = 0, .prerelease = .{ .beta = 1 } }));
+    try std.testing.expect(c.matches(.{ .major = 4, .minor = 5, .patch = 0, .prerelease = .{ .beta = 1 } }));
+    try std.testing.expect(c.matches(.{ .major = 4, .minor = 5, .patch = 0, .prerelease = .{ .rc = 1 } }));
+    try std.testing.expect(c.matches(.{ .major = 4, .minor = 5, .patch = 0, .prerelease = .stable }));
 }
 
 // ============================================================================
@@ -1040,13 +987,13 @@ test "findMatchingDependency stable only" {
     const exact = findMatchingDependency(&deps, Constraint.parse("4.5.1").?, "linux", "x86_64");
     try std.testing.expectEqualStrings("godot_4_5_1_stable_linux_x86_64", exact);
 
-    // Tilde gets highest stable patch
-    const tilde = findMatchingDependency(&deps, Constraint.parse("~4.5").?, "linux", "x86_64");
-    try std.testing.expectEqualStrings("godot_4_5_1_stable_linux_x86_64", tilde);
+    // Minor version gets highest stable patch
+    const minor = findMatchingDependency(&deps, Constraint.parse("4.5").?, "linux", "x86_64");
+    try std.testing.expectEqualStrings("godot_4_5_1_stable_linux_x86_64", minor);
 
-    // Caret gets highest stable minor/patch
-    const caret = findMatchingDependency(&deps, Constraint.parse("^4").?, "linux", "x86_64");
-    try std.testing.expectEqualStrings("godot_4_5_1_stable_linux_x86_64", caret);
+    // Major version gets highest stable minor/patch
+    const major = findMatchingDependency(&deps, Constraint.parse("4").?, "linux", "x86_64");
+    try std.testing.expectEqualStrings("godot_4_5_1_stable_linux_x86_64", major);
 
     // Latest gets highest stable overall
     const latest = findMatchingDependency(&deps, Constraint.parse("latest").?, "linux", "x86_64");
@@ -1066,21 +1013,33 @@ test "findMatchingDependency with prerelease filter" {
         .{ "godot_4_6_0_dev6_linux_x86_64", "hash5" },
     };
 
-    // Get latest beta
+    // Get latest at beta level or above (includes beta, rc, stable - returns stable as highest)
     const beta = findMatchingDependency(&deps, Constraint.parse("4.6-beta").?, "linux", "x86_64");
-    try std.testing.expectEqualStrings("godot_4_6_0_beta2_linux_x86_64", beta);
+    try std.testing.expectEqualStrings("godot_4_6_0_stable_linux_x86_64", beta);
 
     // Get specific beta
     const beta1 = findMatchingDependency(&deps, Constraint.parse("4.6.0-beta1").?, "linux", "x86_64");
     try std.testing.expectEqualStrings("godot_4_6_0_beta1_linux_x86_64", beta1);
 
-    // Get latest rc
-    const rc = findMatchingDependency(&deps, Constraint.parse("~4.6-rc").?, "linux", "x86_64");
-    try std.testing.expectEqualStrings("godot_4_6_0_rc1_linux_x86_64", rc);
+    // Get latest at rc level or above (includes rc, stable - returns stable as highest)
+    const rc = findMatchingDependency(&deps, Constraint.parse("4.6-rc").?, "linux", "x86_64");
+    try std.testing.expectEqualStrings("godot_4_6_0_stable_linux_x86_64", rc);
 
-    // Get latest dev
-    const dev = findMatchingDependency(&deps, Constraint.parse("latest-dev").?, "linux", "x86_64");
-    try std.testing.expectEqualStrings("godot_4_6_0_dev6_linux_x86_64", dev);
+    // Get latest at dev level or above (includes everything - returns stable as highest)
+    const dev = findMatchingDependency(&deps, Constraint.parse("dev").?, "linux", "x86_64");
+    try std.testing.expectEqualStrings("godot_4_6_0_stable_linux_x86_64", dev);
+
+    // Get exact dev6
+    const dev6 = findMatchingDependency(&deps, Constraint.parse("4.6.0-dev6").?, "linux", "x86_64");
+    try std.testing.expectEqualStrings("godot_4_6_0_dev6_linux_x86_64", dev6);
+
+    // Get exact rc1
+    const rc1 = findMatchingDependency(&deps, Constraint.parse("4.6.0-rc1").?, "linux", "x86_64");
+    try std.testing.expectEqualStrings("godot_4_6_0_rc1_linux_x86_64", rc1);
+
+    // Get exact beta2
+    const beta2 = findMatchingDependency(&deps, Constraint.parse("4.6.0-beta2").?, "linux", "x86_64");
+    try std.testing.expectEqualStrings("godot_4_6_0_beta2_linux_x86_64", beta2);
 }
 
 // ============================================================================
