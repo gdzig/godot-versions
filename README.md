@@ -114,6 +114,10 @@ zig build -Dversion="4.6-beta"
 zig build run -- --help
 ```
 
+## Release Sync
+
+This repository automatically syncs new releases from [godotengine/godot-builds](https://github.com/godotengine/godot-builds) daily via GitHub Actions. New stable releases, betas, release candidates, and dev builds are typically available within 24 hours of their official release.
+
 ## License
 
 Godot Engine is licensed under the MIT license.
