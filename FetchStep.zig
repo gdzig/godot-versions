@@ -195,6 +195,11 @@ fn findGodotExecutable(step: *Step, dir: fs.Dir) ![]const u8 {
             return "Godot.app/Contents/MacOS/Godot";
         }
 
+        // macOS app bundle extracted by zig fetch (strips .app wrapper, leaving just Contents/)
+        if (entry.kind == .directory and std.mem.eql(u8, name, "Contents")) {
+            return "Contents/MacOS/Godot";
+        }
+
         if (entry.kind != .file) continue;
 
         // Match Godot executable: Godot_v* or Godot.* (but skip console versions)
