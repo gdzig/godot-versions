@@ -6,6 +6,7 @@
         "build.zig",
         "build.zig.zon",
         "FetchStep.zig",
+        "HeadersStep.zig",
         "versions.zon",
     },
 }

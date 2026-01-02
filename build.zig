@@ -1,6 +1,7 @@
 const std = @import("std");
 const root = @import("root");
 const FetchStep = @import("FetchStep.zig");
+const HeadersStep = @import("HeadersStep.zig");
 const versions = @import("versions.zon");
 
 pub fn build(b: *std.Build) void {
@@ -229,12 +230,12 @@ pub const Constraint = union(enum) {
 const Platform = enum { linux, macos, windows };
 const Arch = enum { x86_64, x86, aarch64, arm, universal };
 
-fn targetToPlatformArch(target: std.Target) struct { platform: Platform, arch: Arch } {
+fn targetToPlatformArch(target: std.Target) ?struct { platform: Platform, arch: Arch } {
     const platform: Platform = switch (target.os.tag) {
         .linux => .linux,
         .macos => .macos,
         .windows => .windows,
-        else => @panic("Unsupported platform for Godot"),
+        else => return null,
     };
 
     const arch: Arch = switch (target.os.tag) {
@@ -244,7 +245,7 @@ fn targetToPlatformArch(target: std.Target) struct { platform: Platform, arch: A
             .x86 => .x86,
             .aarch64 => .aarch64,
             .arm => .arm,
-            else => @panic("Unsupported architecture for Godot"),
+            else => return null,
         },
     };
 
@@ -329,7 +330,7 @@ fn findMatchingVersion(
     constraint: Constraint,
     platform_str: []const u8,
     arch_str: []const u8,
-) MatchedVersion {
+) ?MatchedVersion {
     var best: ?MatchedVersion = null;
 
     for (version_list) |v| {
@@ -353,11 +354,7 @@ fn findMatchingVersion(
         }
     }
 
-    if (best == null) {
-        @panic("No Godot version found matching constraint for this platform/architecture");
-    }
-
-    return best.?;
+    return best;
 }
 
 /// Get a Godot executable path matching the version constraint for the given target.
@@ -445,14 +442,29 @@ fn executableWithVersion(
     target: std.Build.ResolvedTarget,
     constraint_str: []const u8,
 ) ExecutableWithVersion {
-    const constraint = Constraint.parse(constraint_str) orelse
-        @panic("Invalid version constraint");
+    const constraint = Constraint.parse(constraint_str) orelse {
+        std.log.err("Invalid version constraint: '{s}'", .{constraint_str});
+        std.process.exit(1);
+    };
 
-    const plat = targetToPlatformArch(target.result);
+    const plat = targetToPlatformArch(target.result) orelse {
+        std.log.err("Unsupported platform/architecture for Godot: {s}/{s}", .{
+            @tagName(target.result.os.tag),
+            @tagName(target.result.cpu.arch),
+        });
+        std.process.exit(1);
+    };
     const platform_str = platformToString(plat.platform);
     const arch_str = archToString(plat.arch);
 
-    const match = findMatchingVersion(constraint, platform_str, arch_str);
+    const match = findMatchingVersion(constraint, platform_str, arch_str) orelse {
+        std.log.err("No Godot version found matching '{s}' for {s}/{s}", .{
+            constraint_str,
+            platform_str,
+            arch_str,
+        });
+        std.process.exit(1);
+    };
 
     // Create a FetchStep to download and extract the Godot zip
     const step_name = b.fmt("fetch godot v{d}.{d}.{d}-{s}", .{
@@ -488,98 +500,19 @@ fn headersWithFlags(
     godot_exe: std.Build.LazyPath,
     version: Version,
 ) std.Build.LazyPath {
-    // Determine flags based on version:
-    // - 4.1.x and 4.2.0-dev[1-5]: --dump-extension-api (no docs)
-    // - 4.2.0-dev6+: --dump-extension-api-with-docs
-    // - 4.6.0-dev5+: also has --dump-gdextension-interface-json
-    const use_docs = shouldUseDocs(version);
-    const has_json_interface = hasJsonInterface(version);
-
-    // Run godot via shell to cd into output dir first
-    // Use Run.create to get proper caching (not addSystemCommand which may not cache)
-    const run = std.Build.Step.Run.create(b, "dump gdextension headers");
-    run.addArg("sh");
-    run.addArg("-c");
-
-    // Build the command string - $0 is output dir, $1 is godot path
-    // Resolve godot path to absolute before cd'ing since it may be relative
-    var cmd: std.ArrayListUnmanaged(u8) = .empty;
-    cmd.appendSlice(b.allocator, "GODOT=\"$(realpath \"$1\")\" && cd \"$0\" && exec \"$GODOT\"") catch @panic("OOM");
-    if (use_docs) {
-        cmd.appendSlice(b.allocator, " --dump-extension-api-with-docs") catch @panic("OOM");
-    } else {
-        cmd.appendSlice(b.allocator, " --dump-extension-api") catch @panic("OOM");
-    }
-    cmd.appendSlice(b.allocator, " --dump-gdextension-interface") catch @panic("OOM");
-    if (has_json_interface) {
-        cmd.appendSlice(b.allocator, " --dump-gdextension-interface-json") catch @panic("OOM");
-    }
-    cmd.appendSlice(b.allocator, " --headless --quit") catch @panic("OOM");
-
-    run.addArg(cmd.items);
-    const output_dir = run.addOutputDirectoryArg("headers");
-    run.addFileArg(godot_exe);
-
-    return output_dir;
+    const headers_step = HeadersStep.createWithFlags(b, godot_exe, .{
+        .use_docs = shouldUseDocs(version),
+        .has_json = hasJsonInterface(version),
+    });
+    return headers_step.getDirectory();
 }
 
 fn headersWithRuntimeDetection(
     b: *std.Build,
     godot_exe: std.Build.LazyPath,
 ) std.Build.LazyPath {
-    // For unknown versions, run a script that detects and uses appropriate flags
-    // This is a fallback for custom executables
-    const run = std.Build.Step.Run.create(b, "dump gdextension headers");
-    run.addArg("sh");
-    run.addArg("-c");
-
-    // Shell script that detects version and runs with appropriate flags
-    // $0 is the output dir, $1 is the godot executable path
-    const script =
-        \\set -e
-        \\OUTPUT_DIR="$0"
-        \\GODOT="$(realpath "$1")"
-        \\VERSION=$("$GODOT" --version 2>/dev/null | head -1)
-        \\
-        \\# Parse major.minor from version string (e.g., "4.6.beta2.official" -> "4.6")
-        \\MAJOR=$(echo "$VERSION" | cut -d. -f1)
-        \\MINOR=$(echo "$VERSION" | cut -d. -f2)
-        \\PATCH=$(echo "$VERSION" | cut -d. -f3)
-        \\
-        \\# Determine flags
-        \\API_FLAG="--dump-extension-api-with-docs"
-        \\JSON_FLAG=""
-        \\
-        \\# 4.1.x uses old flag
-        \\if [ "$MAJOR" = "4" ] && [ "$MINOR" = "1" ]; then
-        \\  API_FLAG="--dump-extension-api"
-        \\fi
-        \\
-        \\# 4.2.0-dev[1-5] uses old flag (patch will be "0" and VERSION contains "dev")
-        \\if [ "$MAJOR" = "4" ] && [ "$MINOR" = "2" ] && [ "$PATCH" = "0" ]; then
-        \\  case "$VERSION" in
-        \\    *dev1*|*dev2*|*dev3*|*dev4*|*dev5*) API_FLAG="--dump-extension-api" ;;
-        \\  esac
-        \\fi
-        \\
-        \\# 4.6.0-dev5+ has JSON interface dump
-        \\if [ "$MAJOR" -gt "4" ] || ([ "$MAJOR" = "4" ] && [ "$MINOR" -gt "6" ]); then
-        \\  JSON_FLAG="--dump-gdextension-interface-json"
-        \\elif [ "$MAJOR" = "4" ] && [ "$MINOR" = "6" ]; then
-        \\  case "$VERSION" in
-        \\    *dev[5-9]*|*beta*|*rc*|*stable*) JSON_FLAG="--dump-gdextension-interface-json" ;;
-        \\  esac
-        \\fi
-        \\
-        \\cd "$OUTPUT_DIR"
-        \\exec "$GODOT" $API_FLAG --dump-gdextension-interface $JSON_FLAG --headless --quit
-    ;
-
-    run.addArg(script);
-    const output_dir = run.addOutputDirectoryArg("headers");
-    run.addFileArg(godot_exe);
-
-    return output_dir;
+    const headers_step = HeadersStep.create(b, godot_exe);
+    return headers_step.getDirectory();
 }
 
 /// Check if this version should use --dump-extension-api-with-docs
@@ -625,15 +558,30 @@ pub fn directory(
     target: std.Build.ResolvedTarget,
     constraint_str: []const u8,
 ) std.Build.LazyPath {
-    const constraint = Constraint.parse(constraint_str) orelse
-        @panic("Invalid version constraint");
+    const constraint = Constraint.parse(constraint_str) orelse {
+        std.log.err("Invalid version constraint: '{s}'", .{constraint_str});
+        std.process.exit(1);
+    };
 
-    const plat = targetToPlatformArch(target.result);
+    const plat = targetToPlatformArch(target.result) orelse {
+        std.log.err("Unsupported platform/architecture for Godot: {s}/{s}", .{
+            @tagName(target.result.os.tag),
+            @tagName(target.result.cpu.arch),
+        });
+        std.process.exit(1);
+    };
     const platform_str = platformToString(plat.platform);
     const arch_str = archToString(plat.arch);
 
-    const match = findMatchingVersion(constraint, platform_str, arch_str);
-    const fetch = FetchStep.create(b, match.url, match.hash);
+    const match = findMatchingVersion(constraint, platform_str, arch_str) orelse {
+        std.log.err("No Godot version found matching '{s}' for {s}/{s}", .{
+            constraint_str,
+            platform_str,
+            arch_str,
+        });
+        std.process.exit(1);
+    };
+    const fetch = FetchStep.create(b, match.name, match.url, match.hash);
     return fetch.getDirectory();
 }
 
@@ -933,7 +881,7 @@ test "parseDependencyName invalid" {
 
 test "findMatchingVersion finds latest stable" {
     // This should find a recent stable version for linux x86_64
-    const match = findMatchingVersion(Constraint.parse("latest").?, "linux", "x86_64");
+    const match = findMatchingVersion(Constraint.parse("latest").?, "linux", "x86_64").?;
     try std.testing.expect(match.version.prerelease == .stable);
     try std.testing.expect(match.url.len > 0);
     try std.testing.expect(match.hash.len > 0);
@@ -941,7 +889,7 @@ test "findMatchingVersion finds latest stable" {
 
 test "findMatchingVersion finds specific version" {
     // Find a specific old version that we know exists
-    const match = findMatchingVersion(Constraint.parse("3.5.1").?, "linux", "x86_64");
+    const match = findMatchingVersion(Constraint.parse("3.5.1").?, "linux", "x86_64").?;
     try std.testing.expectEqual(@as(u8, 3), match.version.major);
     try std.testing.expectEqual(@as(u8, 5), match.version.minor);
     try std.testing.expectEqual(@as(u8, 1), match.version.patch);
