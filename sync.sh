@@ -8,12 +8,20 @@ set -euo pipefail
 #   PAGE=2 ./sync.sh             # Fetch page 2
 #   LIMIT=100 ./sync.sh          # Fetch 100 releases per page
 #   GITHUB_TOKEN=xxx ./sync.sh   # Use token to avoid rate limiting
+#   NO_CACHE=1 ./sync.sh         # Disable SHA512 caching
 
 PAGE="${PAGE:-1}"
 LIMIT="${LIMIT:-5}"
 GITHUB_TOKEN="${GITHUB_TOKEN:-}"
+NO_CACHE="${NO_CACHE:-}"
 API_URL="https://api.github.com/repos/godotengine/godot-builds/releases?per_page=${LIMIT}&page=${PAGE}"
 VERSIONS_FILE="versions.zon"
+CACHE_FILE="versions-cache.json"
+
+# Initialize cache file if it doesn't exist
+if [[ ! -f "$CACHE_FILE" ]]; then
+  echo "{}" > "$CACHE_FILE"
+fi
 
 echo "Fetching Godot releases from GitHub (godot-builds)..."
 
@@ -35,21 +43,90 @@ existing=$(grep -oE '\.godot_[a-z0-9_]+' "$VERSIONS_FILE" 2>/dev/null | sed 's/^
 
 echo "Processing releases..."
 
+# Cache for SHA512-SUMS.txt per release tag (avoid re-fetching)
+declare -A sha512_sums_cache
+
+# Function to get SHA512 for a file from a release
+get_sha512() {
+  local tag="$1"
+  local filename="$2"
+
+  # Fetch SHA512-SUMS.txt if not cached
+  if [[ -z "${sha512_sums_cache[$tag]:-}" ]]; then
+    local sums_url="https://github.com/godotengine/godot-builds/releases/download/${tag}/SHA512-SUMS.txt"
+    sha512_sums_cache[$tag]=$(curl -sL "$sums_url" 2>/dev/null || echo "")
+  fi
+
+  # Extract SHA512 for the specific file
+  echo "${sha512_sums_cache[$tag]}" | grep -F "$filename" | awk '{print $1}' | head -1
+}
+
+# Function to get cached hash if SHA512 matches
+get_cached_hash() {
+  local filename="$1"
+  local expected_sha512="$2"
+
+  if [[ -n "$NO_CACHE" ]]; then
+    return 1
+  fi
+
+  local cached_sha512
+  cached_sha512=$(jq -r --arg f "$filename" '.[$f].sha512 // ""' "$CACHE_FILE")
+
+  if [[ "$cached_sha512" == "$expected_sha512" ]]; then
+    jq -r --arg f "$filename" '.[$f].zig_hash // ""' "$CACHE_FILE"
+    return 0
+  fi
+  return 1
+}
+
+# Function to update cache
+update_cache() {
+  local filename="$1"
+  local sha512="$2"
+  local zig_hash="$3"
+
+  local tmp_cache
+  tmp_cache=$(mktemp)
+  jq --arg f "$filename" --arg s "$sha512" --arg h "$zig_hash" \
+    '.[$f] = {"sha512": $s, "zig_hash": $h}' "$CACHE_FILE" > "$tmp_cache"
+  mv "$tmp_cache" "$CACHE_FILE"
+}
+
 # Process releases and collect new versions
 new_versions=""
+cache_hits=0
+cache_misses=0
 
-while read -r dep_name url; do
+while read -r dep_name url tag filename; do
   if grep -qx "$dep_name" <<< "$existing"; then
     echo "  Skipping $dep_name (already exists)"
   else
     echo "  Fetching $dep_name..."
-    if hash=$(zig fetch "$url" 2>/dev/null); then
-      new_versions+="    .$dep_name = .{ .url = \"$url\", .hash = \"$hash\" },
-"
-      echo "    Added: $dep_name"
+
+    # Get SHA512 from release checksums
+    expected_sha512=$(get_sha512 "$tag" "$filename")
+
+    # Try to get from cache
+    if cached_hash=$(get_cached_hash "$filename" "$expected_sha512"); then
+      hash="$cached_hash"
+      echo "    Cache hit: $dep_name"
+      ((cache_hits++)) || true
     else
-      echo "    Failed: $dep_name" >&2
+      # Download and compute hash
+      if hash=$(zig fetch "$url" 2>/dev/null); then
+        update_cache "$filename" "$expected_sha512" "$hash"
+        echo "    Downloaded: $dep_name"
+        ((cache_misses++)) || true
+      else
+        echo "    Failed: $dep_name" >&2
+        continue
+      fi
     fi
+
+    new_versions+="    .$dep_name = .{ .url = \"$url\", .hash = \"$hash\" },
+"
+    echo "    Added: $dep_name"
   fi
 done < <(echo "$releases" | jq -r '
   .[] |
@@ -65,6 +142,7 @@ done < <(echo "$releases" | jq -r '
   {
     name: .name,
     url: .browser_download_url,
+    tag: $tag,
     version: $ver,
     prerelease: $pre,
   } |
@@ -88,7 +166,7 @@ done < <(echo "$releases" | jq -r '
   end |
   # Create dependency name: godot_4_6_0_beta2_linux_x86_64
   .dep_name = "godot_" + (.normalized_version | gsub("\\."; "_")) + "_" + .prerelease + "_" + .platform + "_" + .arch |
-  "\(.dep_name) \(.url)"
+  "\(.dep_name) \(.url) \(.tag) \(.name)"
 ')
 
 # If we have new versions, append them to versions.zon
@@ -110,6 +188,7 @@ if [[ -n "$new_versions" ]]; then
   mv "$tmp_file" "$VERSIONS_FILE"
 
   echo "Done! New versions added to $VERSIONS_FILE"
+  echo "Stats: $cache_hits cache hits, $cache_misses downloads"
 else
   echo "No new versions to add."
 fi
