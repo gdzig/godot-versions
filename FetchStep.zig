@@ -3,7 +3,7 @@
 
 const std = @import("std");
 const Step = std.Build.Step;
-const fs = std.fs;
+const Io = std.Io;
 
 const FetchStep = @This();
 
@@ -43,6 +43,7 @@ pub fn getExecutable(fetch: *FetchStep) std.Build.LazyPath {
 fn make(step: *Step, _: Step.MakeOptions) !void {
     const b = step.owner;
     const arena = b.allocator;
+    const io = b.graph.io;
     const fetch: *FetchStep = @fieldParentPtr("step", step);
 
     // Use the expected hash as the cache key
@@ -57,7 +58,7 @@ fn make(step: *Step, _: Step.MakeOptions) !void {
         const digest = man.final();
         fetch.generated_directory.path = try b.cache_root.join(arena, &.{ "o", &digest });
         // Read the executable name from the marker file
-        const exe_name = readExeName(arena, b.cache_root.handle, "o" ++ fs.path.sep_str ++ digest) catch |err| {
+        const exe_name = readExeName(arena, io, b.cache_root.handle, "o" ++ std.fs.path.sep_str ++ digest) catch |err| {
             return step.fail("failed to read cached executable name: {s}", .{@errorName(err)});
         };
         fetch.generated_executable.path = try b.cache_root.join(arena, &.{ "o", &digest, exe_name });
@@ -66,15 +67,15 @@ fn make(step: *Step, _: Step.MakeOptions) !void {
     }
 
     const digest = man.final();
-    const cache_path = "o" ++ fs.path.sep_str ++ digest;
+    const cache_path = "o" ++ std.fs.path.sep_str ++ digest;
 
     // Create output directory
-    var cache_dir = b.cache_root.handle.makeOpenPath(cache_path, .{ .iterate = true }) catch |err| {
+    var cache_dir = b.cache_root.handle.createDirPathOpen(io, cache_path, .{ .open_options = .{ .iterate = true } }) catch |err| {
         return step.fail("unable to make cache path '{s}': {s}", .{
             cache_path, @errorName(err),
         });
     };
-    defer cache_dir.close();
+    defer cache_dir.close(io);
 
     fetch.generated_directory.path = try b.cache_root.join(arena, &.{ "o", &digest });
 
@@ -84,31 +85,24 @@ fn make(step: *Step, _: Step.MakeOptions) !void {
         return step.fail("global cache root path is not available", .{});
     };
 
-    var zig_fetch = std.process.Child.init(
-        &.{ "zig", "fetch", "--global-cache-dir", global_cache_path, fetch.url },
-        arena,
-    );
-    zig_fetch.stderr_behavior = .Ignore;
-    zig_fetch.stdout_behavior = .Pipe;
+    var zig_fetch = try std.process.spawn(io, .{
+        .argv = &.{ "zig", "fetch", "--global-cache-dir", global_cache_path, fetch.url },
+        .stderr = .ignore,
+        .stdout = .pipe,
+    });
 
-    zig_fetch.spawn() catch |err| {
-        return step.fail("failed to spawn 'zig fetch': {s}", .{@errorName(err)});
-    };
+    var read_buf: [4096]u8 = undefined;
+    var stdout_reader = zig_fetch.stdout.?.readerStreaming(io, &read_buf);
+    const stdout = try stdout_reader.interface.allocRemaining(arena, .limited(1024 * 1024));
 
-    const stdout = zig_fetch.stdout.?.readToEndAlloc(arena, 1024 * 1024) catch |err| {
-        return step.fail("failed to read 'zig fetch' output: {s}", .{@errorName(err)});
-    };
+    const result = try zig_fetch.wait(io);
 
-    const result = zig_fetch.wait() catch |err| {
-        return step.fail("failed to wait for 'zig fetch': {s}", .{@errorName(err)});
-    };
-
-    if (result.Exited != 0) {
-        return step.fail("'zig fetch' failed with exit code {d}", .{result.Exited});
+    if (result != .exited or result.exited != 0) {
+        return step.fail("'zig fetch' failed", .{});
     }
 
     // zig fetch outputs the hash (with trailing newline)
-    const pkg_hash = std.mem.trimRight(u8, stdout, "\n\r ");
+    const pkg_hash = std.mem.trim(u8, stdout, "\n\r ");
 
     // Verify the hash matches what we expected
     if (!std.mem.eql(u8, pkg_hash, fetch.expected_hash)) {
@@ -116,32 +110,31 @@ fn make(step: *Step, _: Step.MakeOptions) !void {
     }
 
     // Package is stored in <global_cache>/p/<hash>
-    // Open relative to global_cache_root.handle to avoid issues with relative paths
     const pkg_subpath = try std.fs.path.join(arena, &.{ "p", pkg_hash });
 
     // The fetched path is a directory containing the extracted archive
     // Copy contents to our cache directory
-    var src_dir = b.graph.global_cache_root.handle.openDir(pkg_subpath, .{ .iterate = true }) catch |err| {
+    var src_dir = b.graph.global_cache_root.handle.openDir(io, pkg_subpath, .{ .iterate = true }) catch |err| {
         return step.fail("failed to open fetched directory 'p/{s}': {s}", .{ pkg_hash, @errorName(err) });
     };
-    defer src_dir.close();
+    defer src_dir.close(io);
 
     // Copy all files from the fetched directory to our cache
     var iter = src_dir.iterate();
-    while (iter.next() catch |err| {
+    while (iter.next(io) catch |err| {
         return step.fail("failed to iterate source directory: {s}", .{@errorName(err)});
     }) |entry| {
-        copyEntry(src_dir, cache_dir, entry.name, entry.kind) catch |err| {
+        copyEntry(io, src_dir, cache_dir, entry.name, entry.kind) catch |err| {
             return step.fail("failed to copy '{s}': {s}", .{ entry.name, @errorName(err) });
         };
     }
 
     // Find the Godot executable and store its path
-    const exe_name = try findGodotExecutable(step, cache_dir);
+    const exe_name = try findGodotExecutable(step, io, cache_dir);
     fetch.generated_executable.path = try b.cache_root.join(arena, &.{ "o", &digest, exe_name });
 
     // Write the executable name to a marker file for cache hits
-    cache_dir.writeFile(.{ .sub_path = ".godot_exe", .data = exe_name }) catch |err| {
+    cache_dir.writeFile(io, .{ .sub_path = ".godot_exe", .data = exe_name }) catch |err| {
         return step.fail("failed to write executable marker: {s}", .{@errorName(err)});
     };
 
@@ -149,43 +142,46 @@ fn make(step: *Step, _: Step.MakeOptions) !void {
     try man.writeManifest();
 }
 
-fn readExeName(arena: std.mem.Allocator, cache_root: fs.Dir, cache_path: []const u8) ![]const u8 {
-    var dir = try cache_root.openDir(cache_path, .{});
-    defer dir.close();
-    const file = try dir.openFile(".godot_exe", .{});
-    defer file.close();
-    return file.readToEndAlloc(arena, fs.max_path_bytes);
+fn readExeName(arena: std.mem.Allocator, io: Io, cache_root: Io.Dir, cache_path: []const u8) ![]const u8 {
+    var dir = try cache_root.openDir(io, cache_path, .{});
+    defer dir.close(io);
+    const file = try dir.openFile(io, ".godot_exe", .{});
+    defer file.close(io);
+    var buf: [4096]u8 = undefined;
+    var reader = file.readerStreaming(io, &buf);
+    return reader.interface.allocRemaining(arena, .limited(std.fs.max_path_bytes));
 }
 
-fn copyEntry(src_dir: fs.Dir, dst_dir: fs.Dir, name: []const u8, kind: fs.File.Kind) !void {
+fn copyEntry(io: Io, src_dir: Io.Dir, dst_dir: Io.Dir, name: []const u8, kind: Io.File.Kind) !void {
     switch (kind) {
         .file => {
-            try src_dir.copyFile(name, dst_dir, name, .{});
+            try src_dir.copyFile(name, dst_dir, name, io, .{});
         },
         .directory => {
-            var src_sub = try src_dir.openDir(name, .{ .iterate = true });
-            defer src_sub.close();
-            var dst_sub = try dst_dir.makeOpenPath(name, .{});
-            defer dst_sub.close();
+            var src_sub = try src_dir.openDir(io, name, .{ .iterate = true });
+            defer src_sub.close(io);
+            var dst_sub = try dst_dir.createDirPathOpen(io, name, .{});
+            defer dst_sub.close(io);
 
             var iter = src_sub.iterate();
-            while (try iter.next()) |entry| {
-                try copyEntry(src_sub, dst_sub, entry.name, entry.kind);
+            while (try iter.next(io)) |entry| {
+                try copyEntry(io, src_sub, dst_sub, entry.name, entry.kind);
             }
         },
         .sym_link => {
-            var buf: [fs.max_path_bytes]u8 = undefined;
-            const target = try src_dir.readLink(name, &buf);
-            try dst_dir.symLink(target, name, .{});
+            var link_buf: [std.fs.max_path_bytes]u8 = undefined;
+            const len = try src_dir.readLink(io, name, &link_buf);
+            const target = link_buf[0..len];
+            try dst_dir.symLink(io, target, name, .{});
         },
         else => {},
     }
 }
 
 /// Find the Godot executable in the directory
-fn findGodotExecutable(step: *Step, dir: fs.Dir) ![]const u8 {
+fn findGodotExecutable(step: *Step, io: Io, dir: Io.Dir) ![]const u8 {
     var iter = dir.iterate();
-    while (iter.next() catch |err| {
+    while (iter.next(io) catch |err| {
         return step.fail("failed to iterate directory: {s}", .{@errorName(err)});
     }) |entry| {
         const name = entry.name;

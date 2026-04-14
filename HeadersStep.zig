@@ -3,7 +3,7 @@
 
 const std = @import("std");
 const Step = std.Build.Step;
-const fs = std.fs;
+const Io = std.Io;
 const build_zig = @import("build.zig");
 
 const HeadersStep = @This();
@@ -51,17 +51,14 @@ pub fn getDirectory(headers: *HeadersStep) std.Build.LazyPath {
 fn make(step: *Step, prog_node: Step.MakeOptions) !void {
     const b = step.owner;
     const arena = b.allocator;
+    const io = b.graph.io;
     const headers: *HeadersStep = @fieldParentPtr("step", step);
 
-    // Get the godot executable path (make absolute since we change cwd)
+    // Get the godot executable path (resolve to absolute since we change cwd)
     const godot_path_rel = headers.godot_exe.getPath2(b, step);
-    const godot_path = std.fs.cwd().realpathAlloc(arena, godot_path_rel) catch |err| {
-        return step.fail("failed to resolve Godot path '{s}': {s}", .{ godot_path_rel, @errorName(err) });
-    };
+    const godot_path = try std.fs.path.resolve(arena, &.{godot_path_rel});
 
     // Set up caching based on godot executable path
-    // We hash the path string - if the executable changes, the path will be different
-    // (e.g., different cache directory for different builds)
     var man = b.graph.cache.obtain();
     defer man.deinit();
 
@@ -76,15 +73,15 @@ fn make(step: *Step, prog_node: Step.MakeOptions) !void {
     }
 
     const digest = man.final();
-    const cache_path = "o" ++ fs.path.sep_str ++ digest;
+    const cache_path = "o" ++ std.fs.path.sep_str ++ digest;
 
     // Create output directory
-    var cache_dir = b.cache_root.handle.makeOpenPath(cache_path, .{}) catch |err| {
+    var cache_dir = b.cache_root.handle.createDirPathOpen(io, cache_path, .{}) catch |err| {
         return step.fail("unable to make cache path '{s}': {s}", .{
             cache_path, @errorName(err),
         });
     };
-    defer cache_dir.close();
+    defer cache_dir.close(io);
 
     headers.generated_directory.path = try b.cache_root.join(arena, &.{ "o", &digest });
 
@@ -92,7 +89,7 @@ fn make(step: *Step, prog_node: Step.MakeOptions) !void {
     const use_docs, const has_json = if (headers.known_flags) |flags|
         .{ flags.use_docs, flags.has_json }
     else blk: {
-        const version_str = runGodotVersion(step, godot_path, prog_node) catch |err| {
+        const version_str = runGodotVersion(step, io, godot_path, prog_node) catch |err| {
             return step.fail("failed to get Godot version: {s}", .{@errorName(err)});
         };
         const version = parseVersionString(version_str);
@@ -126,55 +123,47 @@ fn make(step: *Step, prog_node: Step.MakeOptions) !void {
     // Run godot to dump headers
     const cwd_path = headers.generated_directory.path orelse
         return step.fail("generated directory path not set", .{});
-    var child = std.process.Child.init(args[0..arg_count], arena);
-    child.cwd = cwd_path;
-    child.stderr_behavior = .Ignore;
-    child.stdout_behavior = .Ignore;
+    var child = try std.process.spawn(io, .{
+        .argv = args[0..arg_count],
+        .cwd = .{ .path = cwd_path },
+        .stderr = .ignore,
+        .stdout = .ignore,
+    });
 
-    child.spawn() catch |err| {
-        return step.fail("failed to spawn Godot: {s}", .{@errorName(err)});
-    };
-
-    const result = child.wait() catch |err| {
-        return step.fail("failed to wait for Godot: {s}", .{@errorName(err)});
-    };
+    const result = try child.wait(io);
 
     // Godot returns 0 on success
-    if (result.Exited != 0) {
-        return step.fail("Godot exited with code {d}", .{result.Exited});
+    if (result != .exited or result.exited != 0) {
+        return step.fail("Godot exited with non-zero status", .{});
     }
 
     // Write the manifest to finalize the cache entry
     try man.writeManifest();
 }
 
-fn runGodotVersion(step: *Step, godot_path: []const u8, prog_node: Step.MakeOptions) ![]const u8 {
+fn runGodotVersion(step: *Step, io: Io, godot_path: []const u8, prog_node: Step.MakeOptions) ![]const u8 {
     _ = prog_node;
     const arena = step.owner.allocator;
 
-    var child = std.process.Child.init(&.{ godot_path, "--version" }, arena);
-    child.stderr_behavior = .Ignore;
-    child.stdout_behavior = .Pipe;
+    var child = try std.process.spawn(io, .{
+        .argv = &.{ godot_path, "--version" },
+        .stderr = .ignore,
+        .stdout = .pipe,
+    });
 
-    child.spawn() catch |err| {
-        return step.fail("failed to spawn Godot --version: {s}", .{@errorName(err)});
-    };
+    var buf: [4096]u8 = undefined;
+    var reader = child.stdout.?.readerStreaming(io, &buf);
+    const stdout = try reader.interface.allocRemaining(arena, .limited(1024));
 
-    const stdout = child.stdout.?.readToEndAlloc(arena, 1024) catch |err| {
-        return step.fail("failed to read Godot version output: {s}", .{@errorName(err)});
-    };
+    const result = try child.wait(io);
 
-    const result = child.wait() catch |err| {
-        return step.fail("failed to wait for Godot --version: {s}", .{@errorName(err)});
-    };
-
-    if (result.Exited != 0) {
-        return step.fail("Godot --version exited with code {d}", .{result.Exited});
+    if (result != .exited or result.exited != 0) {
+        return step.fail("Godot --version exited with non-zero status", .{});
     }
 
     // Return first line, trimmed
     const first_line = std.mem.sliceTo(stdout, '\n');
-    return std.mem.trimRight(u8, first_line, "\r ");
+    return std.mem.trim(u8, first_line, "\r ");
 }
 
 /// Parsed version info for determining flags
