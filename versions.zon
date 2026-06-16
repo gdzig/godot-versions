@@ -1852,4 +1852,12 @@
     .godot_4_7_0_rc2_windows_x86 = .{ .url = "https://github.com/godotengine/godot-builds/releases/download/4.7-rc2/Godot_v4.7-rc2_win32.exe.zip", .hash = "N-V-__8AABCYWwvypNcMzKjAckgMRybcYDykE94KGFm266N9" },
     .godot_4_7_0_rc2_windows_x86_64 = .{ .url = "https://github.com/godotengine/godot-builds/releases/download/4.7-rc2/Godot_v4.7-rc2_win64.exe.zip", .hash = "N-V-__8AABBSggpTaatDB52ILdGRpy0Hzy8uyn6aVhjiIKUf" },
     .godot_4_7_0_rc2_windows_aarch64 = .{ .url = "https://github.com/godotengine/godot-builds/releases/download/4.7-rc2/Godot_v4.7-rc2_windows_arm64.exe.zip", .hash = "N-V-__8AABCM9Ar0VFGC-ZEO2YqbRjB85G99zpuF6JZN8qun" },
+    .godot_4_7_0_rc3_linux_arm = .{ .url = "https://github.com/godotengine/godot-builds/releases/download/4.7-rc3/Godot_v4.7-rc3_linux.arm32.zip", .hash = "N-V-__8AAIjh4weQdUwl2CHgV_-YKBHCJK29vks3ubA-pQzt" },
+    .godot_4_7_0_rc3_linux_aarch64 = .{ .url = "https://github.com/godotengine/godot-builds/releases/download/4.7-rc3/Godot_v4.7-rc3_linux.arm64.zip", .hash = "N-V-__8AAEiC8gcLKXHVtlWfJqjyvV2dRWtWe7PCt1OMJWLm" },
+    .godot_4_7_0_rc3_linux_x86 = .{ .url = "https://github.com/godotengine/godot-builds/releases/download/4.7-rc3/Godot_v4.7-rc3_linux.x86_32.zip", .hash = "N-V-__8AAIwUjAhiuIpOeaoIGKU34r2mTYvawnZAR9eM0ex5" },
+    .godot_4_7_0_rc3_linux_x86_64 = .{ .url = "https://github.com/godotengine/godot-builds/releases/download/4.7-rc3/Godot_v4.7-rc3_linux.x86_64.zip", .hash = "N-V-__8AAHDLcwiNEAUuF7y_nMgSFSkBlogsbx-0BYvyYlA3" },
+    .godot_4_7_0_rc3_macos_universal = .{ .url = "https://github.com/godotengine/godot-builds/releases/download/4.7-rc3/Godot_v4.7-rc3_macos.universal.zip", .hash = "N-V-__8AAJrzhRQ2GkS0MSapdXXqCMIU0zY502bJvRzvVDQe" },
+    .godot_4_7_0_rc3_windows_x86 = .{ .url = "https://github.com/godotengine/godot-builds/releases/download/4.7-rc3/Godot_v4.7-rc3_win32.exe.zip", .hash = "N-V-__8AABCOWwsXWxIXzO1TKG4sVrzm0_0c6w01rh0eufQo" },
+    .godot_4_7_0_rc3_windows_x86_64 = .{ .url = "https://github.com/godotengine/godot-builds/releases/download/4.7-rc3/Godot_v4.7-rc3_win64.exe.zip", .hash = "N-V-__8AABBUggo3fMqaCl3MzgTVERmTx8HG9nhnoOMXGlPI" },
+    .godot_4_7_0_rc3_windows_aarch64 = .{ .url = "https://github.com/godotengine/godot-builds/releases/download/4.7-rc3/Godot_v4.7-rc3_windows_arm64.exe.zip", .hash = "N-V-__8AABCO9ArVWnqttMepnQJc32AMZSs6WJgUj18J-HHg" },
 }
