@@ -110,12 +110,12 @@ fn make(step: *Step, _: Step.MakeOptions) !void {
     }
 
     // Package is stored in <global_cache>/p/<hash>
-    const pkg_subpath = try std.fs.path.join(arena, &.{ "p", pkg_hash });
+    const pkg_subpath = b.pathResolve(&.{ "zig-pkg", pkg_hash });
 
     // The fetched path is a directory containing the extracted archive
     // Copy contents to our cache directory
-    var src_dir = b.graph.global_cache_root.handle.openDir(io, pkg_subpath, .{ .iterate = true }) catch |err| {
-        return step.fail("failed to open fetched directory 'p/{s}': {s}", .{ pkg_hash, @errorName(err) });
+    var src_dir = b.build_root.handle.openDir(io, pkg_subpath, .{ .iterate = true }) catch |err| {
+        return step.fail("failed to open fetched directory '{s}': {s}", .{ pkg_subpath, @errorName(err) });
     };
     defer src_dir.close(io);
 
