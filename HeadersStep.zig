@@ -100,7 +100,7 @@ fn make(step: *Step, prog_node: Step.MakeOptions) !void {
     var args: [6][]const u8 = undefined;
     var arg_count: usize = 0;
 
-    args[arg_count] = godot_path;
+    args[arg_count] = b.pathFromRoot(godot_path);
     arg_count += 1;
 
     args[arg_count] = if (use_docs) "--dump-extension-api-with-docs" else "--dump-extension-api";
@@ -125,7 +125,7 @@ fn make(step: *Step, prog_node: Step.MakeOptions) !void {
         return step.fail("generated directory path not set", .{});
     var child = try std.process.spawn(io, .{
         .argv = args[0..arg_count],
-        .cwd = .{ .path = cwd_path },
+        .cwd = .{ .path = b.pathFromRoot(cwd_path) },
         .stderr = .ignore,
         .stdout = .ignore,
     });
