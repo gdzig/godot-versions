@@ -1932,4 +1932,11 @@
     .godot_4_7_2_stable_windows_x86 = .{ .url = "https://github.com/godotengine/godot-builds/releases/download/4.7.2-stable/Godot_v4.7.2-stable_win32.exe.zip", .hash = "N-V-__8AABAwoAuML3JcG0y6Kzay3r4EsRuS_6DLqEdP_ElQ" },
     .godot_4_7_2_stable_windows_x86_64 = .{ .url = "https://github.com/godotengine/godot-builds/releases/download/4.7.2-stable/Godot_v4.7.2-stable_win64.exe.zip", .hash = "N-V-__8AABC2ygpgxk-Bv3C8LiI65NztBLmA6ZIQ0lgu1j91" },
     .godot_4_7_2_stable_windows_aarch64 = .{ .url = "https://github.com/godotengine/godot-builds/releases/download/4.7.2-stable/Godot_v4.7.2-stable_windows_arm64.exe.zip", .hash = "N-V-__8AABDmOwsvnrCgPpsP-aH6ufSq-43-nS2wm0YRxeXv" },
+    .godot_3_6_3_stable_linux_arm = .{ .url = "https://github.com/godotengine/godot-builds/releases/download/3.6.3-stable/Godot_v3.6.3-stable_linux.arm32.zip", .hash = "N-V-__8AAEyeLQPn06_ht38SVwuQg4AofFkiKR05T4M0P5HZ" },
+    .godot_3_6_3_stable_linux_aarch64 = .{ .url = "https://github.com/godotengine/godot-builds/releases/download/3.6.3-stable/Godot_v3.6.3-stable_linux.arm64.zip", .hash = "N-V-__8AAJDiRgP4VzoENV8hqkoYNAVRz9UwfIyov2obtLyU" },
+    .godot_3_6_3_stable_macos_universal = .{ .url = "https://github.com/godotengine/godot-builds/releases/download/3.6.3-stable/Godot_v3.6.3-stable_osx.universal.zip", .hash = "N-V-__8AAH64Bgcmhvh_Z7aSQvWCTmd46LmZVzSZdLmP0FYv" },
+    .godot_3_6_3_stable_windows_x86 = .{ .url = "https://github.com/godotengine/godot-builds/releases/download/3.6.3-stable/Godot_v3.6.3-stable_win32.exe.zip", .hash = "N-V-__8AAEw8HgR__IZ0gGa_3dxCzidZ4HSwo_L-2tHXAr1X" },
+    .godot_3_6_3_stable_windows_x86_64 = .{ .url = "https://github.com/godotengine/godot-builds/releases/download/3.6.3-stable/Godot_v3.6.3-stable_win64.exe.zip", .hash = "N-V-__8AADwWPATJPs0a2_GLarxy3UKEQdInIh0XK6n7jOvj" },
+    .godot_3_6_3_stable_linux_x86 = .{ .url = "https://github.com/godotengine/godot-builds/releases/download/3.6.3-stable/Godot_v3.6.3-stable_x11.32.zip", .hash = "N-V-__8AAAjYoAMFQWxm6Z7Nr-SxJN2bDX9fizrcnMBPot_m" },
+    .godot_3_6_3_stable_linux_x86_64 = .{ .url = "https://github.com/godotengine/godot-builds/releases/download/3.6.3-stable/Godot_v3.6.3-stable_x11.64.zip", .hash = "N-V-__8AAKjy9QMEfyXP8zYpsQ5NaGACBytcBhB7PckJjBcn" },
 }
