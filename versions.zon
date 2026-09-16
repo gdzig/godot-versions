@@ -1955,4 +1955,12 @@
     .godot_4_8_0_dev5_windows_x86 = .{ .url = "https://github.com/godotengine/godot-builds/releases/download/4.8-dev5/Godot_v4.8-dev5_win32.exe.zip", .hash = "N-V-__8AADArhwvvlDJDPw-Eq6hmRQWcIBPjlnMYD65yBPD5" },
     .godot_4_8_0_dev5_windows_x86_64 = .{ .url = "https://github.com/godotengine/godot-builds/releases/download/4.8-dev5/Godot_v4.8-dev5_win64.exe.zip", .hash = "N-V-__8AADBfzgoTOSFh9F43KCqkkRDuxHVfLd0_9Tckq3Oj" },
     .godot_4_8_0_dev5_windows_aarch64 = .{ .url = "https://github.com/godotengine/godot-builds/releases/download/4.8-dev5/Godot_v4.8-dev5_windows_arm64.exe.zip", .hash = "N-V-__8AADDphAs1MJtiXcxYn91Idf2rQmtLJu7WqDkdSQBy" },
+    .godot_4_8_0_dev6_linux_arm = .{ .url = "https://github.com/godotengine/godot-builds/releases/download/4.8-dev6/Godot_v4.8-dev6_linux.arm32.zip", .hash = "N-V-__8AAFBfRghXq04SuyDdTTZSJycHVm97W16FRx9laPFO" },
+    .godot_4_8_0_dev6_linux_aarch64 = .{ .url = "https://github.com/godotengine/godot-builds/releases/download/4.8-dev6/Godot_v4.8-dev6_linux.arm64.zip", .hash = "N-V-__8AALgaUwiPVcdWnweRScGr5IyuVeGilJ3YfIKKguS0" },
+    .godot_4_8_0_dev6_linux_x86 = .{ .url = "https://github.com/godotengine/godot-builds/releases/download/4.8-dev6/Godot_v4.8-dev6_linux.x86_32.zip", .hash = "N-V-__8AAAiT_gghKpRqF2ahPUARB5R3-mUU6_2zT1S-Lra_" },
+    .godot_4_8_0_dev6_linux_x86_64 = .{ .url = "https://github.com/godotengine/godot-builds/releases/download/4.8-dev6/Godot_v4.8-dev6_linux.x86_64.zip", .hash = "N-V-__8AAGiU-ggFUDPLq-lBeBHiYd_ZWY2FkdC-1-Bu0svL" },
+    .godot_4_8_0_dev6_macos_universal = .{ .url = "https://github.com/godotengine/godot-builds/releases/download/4.8-dev6/Godot_v4.8-dev6_macos.universal.zip", .hash = "N-V-__8AAGkKvxvTslDqFvesnjo78ssINcUjfnzYzfcs3kE3" },
+    .godot_4_8_0_dev6_windows_x86 = .{ .url = "https://github.com/godotengine/godot-builds/releases/download/4.8-dev6/Godot_v4.8-dev6_win32.exe.zip", .hash = "N-V-__8AADCJiwu_-z6jO8lu28hFPD0lCL-Mr7X-jzv0VZzU" },
+    .godot_4_8_0_dev6_windows_x86_64 = .{ .url = "https://github.com/godotengine/godot-builds/releases/download/4.8-dev6/Godot_v4.8-dev6_win64.exe.zip", .hash = "N-V-__8AADA70gqS4YnfXWDK29cnNd8aQWzJtmsaUMFO4GsC" },
+    .godot_4_8_0_dev6_windows_aarch64 = .{ .url = "https://github.com/godotengine/godot-builds/releases/download/4.8-dev6/Godot_v4.8-dev6_windows_arm64.exe.zip", .hash = "N-V-__8AADBliQv9x51FDO9-8nAQTx-NNDPR3UOo6PGxusl8" },
 }
