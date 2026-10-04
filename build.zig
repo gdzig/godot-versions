@@ -1,7 +1,3 @@
-const std = @import("std");
-const root = @import("root");
-const versions = @import("versions.zon");
-
 pub fn build(b: *std.Build) void {
     // Build-time helper (fetching archives, dumping headers), compiled for the
     // host. Exposed as a named lazy path so the public helpers can run it
@@ -696,10 +692,10 @@ test "Version.parse invalid" {
 }
 
 test "Version.order same base different prerelease" {
-    const stable = Version{ .major = 4, .minor = 5, .patch = 1, .prerelease = .stable };
-    const rc1 = Version{ .major = 4, .minor = 5, .patch = 1, .prerelease = .{ .rc = 1 } };
-    const beta2 = Version{ .major = 4, .minor = 5, .patch = 1, .prerelease = .{ .beta = 2 } };
-    const dev1 = Version{ .major = 4, .minor = 5, .patch = 1, .prerelease = .{ .dev = 1 } };
+    const stable: Version = .{ .major = 4, .minor = 5, .patch = 1, .prerelease = .stable };
+    const rc1: Version = .{ .major = 4, .minor = 5, .patch = 1, .prerelease = .{ .rc = 1 } };
+    const beta2: Version = .{ .major = 4, .minor = 5, .patch = 1, .prerelease = .{ .beta = 2 } };
+    const dev1: Version = .{ .major = 4, .minor = 5, .patch = 1, .prerelease = .{ .dev = 1 } };
 
     // stable > rc > beta > dev
     try std.testing.expectEqual(std.math.Order.gt, stable.order(rc1));
@@ -708,9 +704,9 @@ test "Version.order same base different prerelease" {
 }
 
 test "Version.order different base version" {
-    const v451_stable = Version{ .major = 4, .minor = 5, .patch = 1, .prerelease = .stable };
-    const v450_stable = Version{ .major = 4, .minor = 5, .patch = 0, .prerelease = .stable };
-    const v460_beta1 = Version{ .major = 4, .minor = 6, .patch = 0, .prerelease = .{ .beta = 1 } };
+    const v451_stable: Version = .{ .major = 4, .minor = 5, .patch = 1, .prerelease = .stable };
+    const v450_stable: Version = .{ .major = 4, .minor = 5, .patch = 0, .prerelease = .stable };
+    const v460_beta1: Version = .{ .major = 4, .minor = 6, .patch = 0, .prerelease = .{ .beta = 1 } };
 
     try std.testing.expectEqual(std.math.Order.gt, v451_stable.order(v450_stable));
     // 4.6.0-beta1 > 4.5.1-stable (higher base version wins)
@@ -1004,3 +1000,8 @@ test "hasJsonInterface 4.7+ returns true" {
     try std.testing.expect(hasJsonInterface(.{ .major = 4, .minor = 7, .patch = 0, .prerelease = .stable }));
     try std.testing.expect(hasJsonInterface(.{ .major = 5, .minor = 0, .patch = 0, .prerelease = .stable }));
 }
+
+const std = @import("std");
+
+const root = @import("root");
+const versions = @import("versions.zon");

@@ -8,10 +8,6 @@
 //!   godot_tool fetch <zig_exe> <global_cache_dir> <url> <hash> <exe_name> <out_dir>
 //!   godot_tool headers <godot_exe> <out_dir> <auto|docs|nodocs> <auto|json|nojson>
 
-const std = @import("std");
-const Io = std.Io;
-const Dir = Io.Dir;
-
 pub fn main(init: std.process.Init) !void {
     const arena = init.arena.allocator();
     const io = init.io;
@@ -120,7 +116,7 @@ fn placeExecutable(arena: std.mem.Allocator, io: Io, dir: Dir, exe_name: []const
             try dir.copyFile(found, dir, exe_name, io, .{});
         };
     }
-    if (@import("builtin").os.tag != .windows) {
+    if (builtin.os.tag != .windows) {
         try dir.setFilePermissions(io, exe_name, .executable_file, .{});
     }
 }
@@ -276,3 +272,8 @@ test parseVersionString {
     try std.testing.expect(!hasJsonInterface(parseVersionString("4.5.1.stable.official")));
     try std.testing.expect(!shouldUseDocs(parseVersionString("4.1.3.stable.official")));
 }
+
+const builtin = @import("builtin");
+const std = @import("std");
+const Io = std.Io;
+const Dir = Io.Dir;
