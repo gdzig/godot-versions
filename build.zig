@@ -3,7 +3,20 @@ const root = @import("root");
 const versions = @import("versions.zon");
 
 pub fn build(b: *std.Build) void {
-    if (@hasDecl(root, "root") and root.root != @This()) return;
+    // Build-time helper (fetching archives, dumping headers), compiled for the
+    // host. Exposed as a named lazy path so the public helpers can run it
+    // whether this package is the root or a dependency.
+    const tool = b.addExecutable(.{
+        .name = "godot_tool",
+        .root_module = b.createModule(.{
+            .root_source_file = b.path("tools/godot_tool.zig"),
+            .target = b.graph.host,
+            .optimize = .ReleaseSafe,
+        }),
+    });
+    b.addNamedLazyPath("godot_tool", tool.getEmittedBin());
+
+    if (!isRootPackage()) return;
 
     const target = b.standardTargetOptions(.{});
     const version = b.option([]const u8, "version", "Godot version constraint (default: latest)") orelse "latest";
@@ -475,30 +488,24 @@ fn executableWithVersion(
     return .{ .exe = fetched.exe, .version = match.version };
 }
 
-/// The build-time helper tool (see `tools/godot_tool.zig`), compiled for the host.
-///
-/// The source is embedded so that it resolves correctly both when this package
-/// is the root and when it is used as a dependency.
-fn godotTool(b: *std.Build) *std.Build.Step.Compile {
-    const State = struct {
-        var graph: ?*std.Build.Graph = null;
-        var tool: *std.Build.Step.Compile = undefined;
-    };
-    if (State.graph == b.graph) return State.tool;
+/// Whether this package's build.zig is the one `zig build` was invoked on.
+fn isRootPackage() bool {
+    return !@hasDecl(root, "root") or root.root == @This();
+}
 
-    const files = b.addWriteFiles();
-    const src = files.add("godot_tool.zig", @embedFile("tools/godot_tool.zig"));
-    const tool = b.addExecutable(.{
-        .name = "godot_tool",
-        .root_module = b.createModule(.{
-            .root_source_file = src,
-            .target = b.graph.host,
-            .optimize = .ReleaseSafe,
-        }),
-    });
-    State.graph = b.graph;
-    State.tool = tool;
-    return tool;
+/// Create a Run step for the helper tool (see `tools/godot_tool.zig`).
+///
+/// The public helpers receive the consumer's `*std.Build`, so the tool is
+/// looked up on this package's own builder.
+fn addGodotToolRun(b: *std.Build, name: []const u8) *std.Build.Step.Run {
+    const tool = if (isRootPackage())
+        b.named_lazy_paths.get("godot_tool").?
+    else
+        b.dependencyFromBuildZig(@This(), .{}).namedLazyPath("godot_tool");
+    const run = b.addRunFile(tool);
+    run.setName(name);
+    run.rename_step_with_output_arg = false;
+    return run;
 }
 
 const Fetched = struct {
@@ -521,9 +528,7 @@ fn fetchGodot(
         .linux => "godot",
     };
 
-    const run = b.addRunArtifact(godotTool(b));
-    run.setName(step_name);
-    run.rename_step_with_output_arg = false;
+    const run = addGodotToolRun(b, step_name);
     run.addArg("fetch");
     // Passed as directory args so only the path (not the contents) is hashed.
     run.addDirectoryArg(.zig_exe);
@@ -538,9 +543,7 @@ fn headersWithVersion(
     godot_exe: std.Build.LazyPath,
     known_version: ?Version,
 ) std.Build.LazyPath {
-    const run = b.addRunArtifact(godotTool(b));
-    run.setName("dump gdextension headers");
-    run.rename_step_with_output_arg = false;
+    const run = addGodotToolRun(b, "dump gdextension headers");
     run.addArg("headers");
     run.addFileArg(godot_exe);
     const dir = run.addOutputDirectoryArg("headers");
