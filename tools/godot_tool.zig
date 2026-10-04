@@ -1,8 +1,4 @@
-//! Build-time helper used by `build.zig`.
-//!
-//! Zig 0.17 no longer supports custom build steps, so the logic that used to
-//! live in `FetchStep.zig` and `HeadersStep.zig` runs as a host executable
-//! driven by `std.Build.Step.Run`.
+//! Build-time helper used by `build.zig`, driven by `std.Build.Step.Run`.
 //!
 //! Usage:
 //!   godot_tool fetch <zig_exe> <global_cache_dir> <url> <hash> <exe_name> <out_dir>
