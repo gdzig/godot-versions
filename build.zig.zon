@@ -5,8 +5,7 @@
     .paths = .{
         "build.zig",
         "build.zig.zon",
-        "FetchStep.zig",
-        "HeadersStep.zig",
+        "tools",
         "versions.zon",
     },
 }

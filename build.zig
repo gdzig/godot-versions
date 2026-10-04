@@ -1,11 +1,18 @@
-const std = @import("std");
-const root = @import("root");
-const FetchStep = @import("FetchStep.zig");
-const HeadersStep = @import("HeadersStep.zig");
-const versions = @import("versions.zon");
-
 pub fn build(b: *std.Build) void {
-    if (@hasDecl(root, "root") and root.root != @This()) return;
+    // Build-time helper (fetching archives, dumping headers), compiled for the
+    // host. Exposed as a named lazy path so the public helpers can run it
+    // whether this package is the root or a dependency.
+    const tool = b.addExecutable(.{
+        .name = "godot_tool",
+        .root_module = b.createModule(.{
+            .root_source_file = b.path("tools/godot_tool.zig"),
+            .target = b.graph.host,
+            .optimize = .ReleaseSafe,
+        }),
+    });
+    b.addNamedLazyPath("godot_tool", tool.getEmittedBin());
+
+    if (!isRootPackage()) return;
 
     const target = b.standardTargetOptions(.{});
     const version = b.option([]const u8, "version", "Godot version constraint (default: latest)") orelse "latest";
@@ -30,7 +37,7 @@ pub fn build(b: *std.Build) void {
     // Run step
     const run = std.Build.Step.Run.create(b, "run godot");
     run.addFileArg(resolved.exe);
-    if (b.args) |args| run.addArgs(args);
+    run.addPassthruArgs();
     run.stdio = .inherit;
 
     const run_step = b.step("run", "Run Godot");
@@ -316,11 +323,11 @@ const VersionInfo = struct {
 
 const version_list = blk: {
     @setEvalBranchQuota(1_000_000);
-    const fields = @typeInfo(@TypeOf(versions)).@"struct".fields;
-    var list: [fields.len]VersionInfo = undefined;
-    for (fields, 0..) |field, i| {
-        const v = @field(versions, field.name);
-        list[i] = .{ .name = field.name, .url = v.url, .hash = v.hash };
+    const field_names = @typeInfo(@TypeOf(versions)).@"struct".field_names;
+    var list: [field_names.len]VersionInfo = undefined;
+    for (field_names, 0..) |field_name, i| {
+        const v = @field(versions, field_name);
+        list[i] = .{ .name = field_name, .url = v.url, .hash = v.hash };
     }
     const final = list;
     break :blk final;
@@ -466,19 +473,65 @@ fn executableWithVersion(
         std.process.exit(1);
     };
 
-    // Create a FetchStep to download and extract the Godot zip
     const step_name = b.fmt("fetch godot v{d}.{d}.{d}-{s}", .{
         match.version.major,
         match.version.minor,
         match.version.patch,
         @tagName(match.version.prerelease),
     });
-    const fetch = FetchStep.create(b, step_name, match.url, match.hash);
+    const fetched = fetchGodot(b, step_name, match.url, match.hash, plat.platform);
 
-    // FetchStep finds and tracks the actual executable path
-    const exe_path = fetch.getExecutable();
+    return .{ .exe = fetched.exe, .version = match.version };
+}
 
-    return .{ .exe = exe_path, .version = match.version };
+/// Whether this package's build.zig is the one `zig build` was invoked on.
+fn isRootPackage() bool {
+    return !@hasDecl(root, "root") or root.root == @This();
+}
+
+/// Create a Run step for the helper tool (see `tools/godot_tool.zig`).
+///
+/// The public helpers receive the consumer's `*std.Build`, so the tool is
+/// looked up on this package's own builder.
+fn addGodotToolRun(b: *std.Build, name: []const u8) *std.Build.Step.Run {
+    const tool = if (isRootPackage())
+        b.named_lazy_paths.get("godot_tool").?
+    else
+        b.dependencyFromBuildZig(@This(), .{}).namedLazyPath("godot_tool");
+    const run = b.addRunFile(tool);
+    run.setName(name);
+    run.rename_step_with_output_arg = false;
+    return run;
+}
+
+const Fetched = struct {
+    dir: std.Build.LazyPath,
+    exe: std.Build.LazyPath,
+};
+
+/// Download (via `zig fetch`) and extract a Godot release archive.
+fn fetchGodot(
+    b: *std.Build,
+    step_name: []const u8,
+    url: []const u8,
+    hash: []const u8,
+    platform: Platform,
+) Fetched {
+    // Normalized location of the executable inside the extracted directory.
+    const exe_name = switch (platform) {
+        .macos => "Godot.app/Contents/MacOS/Godot",
+        .windows => "godot.exe",
+        .linux => "godot",
+    };
+
+    const run = addGodotToolRun(b, step_name);
+    run.addArg("fetch");
+    // Passed as directory args so only the path (not the contents) is hashed.
+    run.addDirectoryArg(.zig_exe);
+    run.addDirectoryArg(b.graph.path(.global_cache, ""));
+    run.addArgs(&.{ url, hash, exe_name });
+    const dir = run.addOutputDirectoryArg("godot");
+    return .{ .dir = dir, .exe = dir.path(b, exe_name) };
 }
 
 fn headersWithVersion(
@@ -486,33 +539,19 @@ fn headersWithVersion(
     godot_exe: std.Build.LazyPath,
     known_version: ?Version,
 ) std.Build.LazyPath {
+    const run = addGodotToolRun(b, "dump gdextension headers");
+    run.addArg("headers");
+    run.addFileArg(godot_exe);
+    const dir = run.addOutputDirectoryArg("headers");
     if (known_version) |version| {
         // We know the version at build time, use appropriate flags
-        return headersWithFlags(b, godot_exe, version);
+        run.addArg(if (shouldUseDocs(version)) "docs" else "nodocs");
+        run.addArg(if (hasJsonInterface(version)) "json" else "nojson");
     } else {
-        // Unknown version (custom exe), use a runtime detection step
-        return headersWithRuntimeDetection(b, godot_exe);
+        // Unknown version (custom exe), detect it when the step runs
+        run.addArgs(&.{ "auto", "auto" });
     }
-}
-
-fn headersWithFlags(
-    b: *std.Build,
-    godot_exe: std.Build.LazyPath,
-    version: Version,
-) std.Build.LazyPath {
-    const headers_step = HeadersStep.createWithFlags(b, godot_exe, .{
-        .use_docs = shouldUseDocs(version),
-        .has_json = hasJsonInterface(version),
-    });
-    return headers_step.getDirectory();
-}
-
-fn headersWithRuntimeDetection(
-    b: *std.Build,
-    godot_exe: std.Build.LazyPath,
-) std.Build.LazyPath {
-    const headers_step = HeadersStep.create(b, godot_exe);
-    return headers_step.getDirectory();
+    return dir;
 }
 
 /// Check if this version should use --dump-extension-api-with-docs
@@ -581,8 +620,8 @@ pub fn directory(
         });
         std.process.exit(1);
     };
-    const fetch = FetchStep.create(b, match.name, match.url, match.hash);
-    return fetch.getDirectory();
+    const fetched = fetchGodot(b, b.fmt("fetch {s}", .{match.name}), match.url, match.hash, plat.platform);
+    return fetched.dir;
 }
 
 // ============================================================================
@@ -653,10 +692,10 @@ test "Version.parse invalid" {
 }
 
 test "Version.order same base different prerelease" {
-    const stable = Version{ .major = 4, .minor = 5, .patch = 1, .prerelease = .stable };
-    const rc1 = Version{ .major = 4, .minor = 5, .patch = 1, .prerelease = .{ .rc = 1 } };
-    const beta2 = Version{ .major = 4, .minor = 5, .patch = 1, .prerelease = .{ .beta = 2 } };
-    const dev1 = Version{ .major = 4, .minor = 5, .patch = 1, .prerelease = .{ .dev = 1 } };
+    const stable: Version = .{ .major = 4, .minor = 5, .patch = 1, .prerelease = .stable };
+    const rc1: Version = .{ .major = 4, .minor = 5, .patch = 1, .prerelease = .{ .rc = 1 } };
+    const beta2: Version = .{ .major = 4, .minor = 5, .patch = 1, .prerelease = .{ .beta = 2 } };
+    const dev1: Version = .{ .major = 4, .minor = 5, .patch = 1, .prerelease = .{ .dev = 1 } };
 
     // stable > rc > beta > dev
     try std.testing.expectEqual(std.math.Order.gt, stable.order(rc1));
@@ -665,9 +704,9 @@ test "Version.order same base different prerelease" {
 }
 
 test "Version.order different base version" {
-    const v451_stable = Version{ .major = 4, .minor = 5, .patch = 1, .prerelease = .stable };
-    const v450_stable = Version{ .major = 4, .minor = 5, .patch = 0, .prerelease = .stable };
-    const v460_beta1 = Version{ .major = 4, .minor = 6, .patch = 0, .prerelease = .{ .beta = 1 } };
+    const v451_stable: Version = .{ .major = 4, .minor = 5, .patch = 1, .prerelease = .stable };
+    const v450_stable: Version = .{ .major = 4, .minor = 5, .patch = 0, .prerelease = .stable };
+    const v460_beta1: Version = .{ .major = 4, .minor = 6, .patch = 0, .prerelease = .{ .beta = 1 } };
 
     try std.testing.expectEqual(std.math.Order.gt, v451_stable.order(v450_stable));
     // 4.6.0-beta1 > 4.5.1-stable (higher base version wins)
@@ -961,3 +1000,8 @@ test "hasJsonInterface 4.7+ returns true" {
     try std.testing.expect(hasJsonInterface(.{ .major = 4, .minor = 7, .patch = 0, .prerelease = .stable }));
     try std.testing.expect(hasJsonInterface(.{ .major = 5, .minor = 0, .patch = 0, .prerelease = .stable }));
 }
+
+const std = @import("std");
+
+const root = @import("root");
+const versions = @import("versions.zon");
