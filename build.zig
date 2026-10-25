@@ -142,7 +142,12 @@ pub const PrereleaseFilter = union(enum) {
 
 pub const Constraint = union(enum) {
     /// Version match: "4" (any 4.x.x), "4.5" (any 4.5.x), "4.5.1" (exact)
-    version: struct { major: u8, minor: ?u8, patch: ?u8, prerelease_filter: PrereleaseFilter },
+    version: struct {
+        major: u8,
+        minor: ?u8,
+        patch: ?u8,
+        prerelease_filter: PrereleaseFilter,
+    },
     /// Latest available (stable only by default)
     latest: PrereleaseFilter,
 
@@ -237,7 +242,10 @@ pub const Constraint = union(enum) {
 const Platform = enum { linux, macos, windows };
 const Arch = enum { x86_64, x86, aarch64, arm, universal };
 
-fn targetToPlatformArch(target: std.Target) ?struct { platform: Platform, arch: Arch } {
+fn targetToPlatformArch(target: std.Target) ?struct {
+    platform: Platform,
+    arch: Arch,
+} {
     const platform: Platform = switch (target.os.tag) {
         .linux => .linux,
         .macos => .macos,
@@ -278,7 +286,11 @@ fn archToString(arch: Arch) []const u8 {
 }
 
 /// Parse a dependency name like "godot_4_5_1_stable_linux_x86_64" or "godot_4_6_0_beta2_linux_x86_64"
-fn parseDependencyName(name: []const u8) ?struct { version: Version, platform: []const u8, arch: []const u8 } {
+fn parseDependencyName(name: []const u8) ?struct {
+    version: Version,
+    platform: []const u8,
+    arch: []const u8,
+} {
     // Must start with "godot_"
     const prefix = "godot_";
     if (!std.mem.startsWith(u8, name, prefix)) return null;
@@ -1004,4 +1016,5 @@ test "hasJsonInterface 4.7+ returns true" {
 const std = @import("std");
 
 const root = @import("root");
+
 const versions = @import("versions.zon");

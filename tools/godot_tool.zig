@@ -269,7 +269,7 @@ test parseVersionString {
     try std.testing.expect(!shouldUseDocs(parseVersionString("4.1.3.stable.official")));
 }
 
-const builtin = @import("builtin");
 const std = @import("std");
 const Io = std.Io;
 const Dir = Io.Dir;
+const builtin = @import("builtin");
