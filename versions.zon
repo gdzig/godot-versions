@@ -1978,4 +1978,11 @@
     .godot_4_8_0_beta1_windows_x86 = .{ .url = "https://github.com/godotengine/godot-builds/releases/download/4.8-beta1/Godot_v4.8-beta1_win32.exe.zip", .hash = "N-V-__8AAFi1_gl25KAhK8AYRx9awNZ0uRnANmojwcPP79Fg" },
     .godot_4_8_0_beta1_windows_x86_64 = .{ .url = "https://github.com/godotengine/godot-builds/releases/download/4.8-beta1/Godot_v4.8-beta1_win64.exe.zip", .hash = "N-V-__8AAACmQAl38RXIZ4CCXWtgZ7SoREaTxJ9xIJxajJMN" },
     .godot_4_8_0_beta1_windows_aarch64 = .{ .url = "https://github.com/godotengine/godot-builds/releases/download/4.8-beta1/Godot_v4.8-beta1_windows_arm64.exe.zip", .hash = "N-V-__8AADAFUQonb9BENKa5mCWpp46MqJufWP0BYTdHB_Nv" },
+    .godot_4_8_0_beta2_linux_arm = .{ .url = "https://github.com/godotengine/godot-builds/releases/download/4.8-beta2/Godot_v4.8-beta2_linux.arm32.zip", .hash = "N-V-__8AAHCCswbBQfo4dmZUIkvAcYh9DuoDTron3xR6GmXb" },
+    .godot_4_8_0_beta2_linux_aarch64 = .{ .url = "https://github.com/godotengine/godot-builds/releases/download/4.8-beta2/Godot_v4.8-beta2_linux.arm64.zip", .hash = "N-V-__8AAGBHYwfWXlI8t_zA_JLzTioQ0v4VMVtgdmrLpINk" },
+    .godot_4_8_0_beta2_linux_x86 = .{ .url = "https://github.com/godotengine/godot-builds/releases/download/4.8-beta2/Godot_v4.8-beta2_linux.x86_32.zip", .hash = "N-V-__8AAHxvbwesPfoSmqLguV-_L2e-hEyJxN_1saa7z0Qq" },
+    .godot_4_8_0_beta2_linux_x86_64 = .{ .url = "https://github.com/godotengine/godot-builds/releases/download/4.8-beta2/Godot_v4.8-beta2_linux.x86_64.zip", .hash = "N-V-__8AAHhZCggvEZ1_wWw_F0lKk8HcesiZcbKDKEv0DmNu" },
+    .godot_4_8_0_beta2_windows_x86 = .{ .url = "https://github.com/godotengine/godot-builds/releases/download/4.8-beta2/Godot_v4.8-beta2_win32.exe.zip", .hash = "N-V-__8AAFjl5glsgK-1tx4CeriqQgJYfV3rq8HL_4JgmYN2" },
+    .godot_4_8_0_beta2_windows_x86_64 = .{ .url = "https://github.com/godotengine/godot-builds/releases/download/4.8-beta2/Godot_v4.8-beta2_win64.exe.zip", .hash = "N-V-__8AAAB4KwkfXuUz9VUKkPTgq7sipboXesfkgG3wRNVY" },
+    .godot_4_8_0_beta2_windows_aarch64 = .{ .url = "https://github.com/godotengine/godot-builds/releases/download/4.8-beta2/Godot_v4.8-beta2_windows_arm64.exe.zip", .hash = "N-V-__8AADBXQQoESeIbv3N9BUfk37R1uoKUZ056Aasx1lhL" },
 }
